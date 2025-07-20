@@ -1,5 +1,6 @@
+import "./css/styles.css";
 import User from "./clasess/User.ts";
-import Trip from "./clasess/Trip";
+import Trip from "./clasess/trip.ts";
 import dayjs from "dayjs";
 // import Agent from "./clasess/Agent";
 // import { displayYearlyProfitChart } from "./charts";
@@ -16,7 +17,9 @@ import { travelers } from "../test/test-data/user-test-data.ts";
 import type { TripType, DestinationType, UserType, ViewType } from "./types.ts";
 
 // Global Variables
-let currentUser: UserType;
+let currentUser: UserType = travelers[0];
+
+console.log("test");
 
 // Query Selectors
 const mainTitle = document.getElementById("js-main-title") as HTMLElement,
@@ -25,7 +28,7 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   // accountBtn = document.getElementById("js-account-btn") as HTMLButtonElement,
   homeBtn = document.getElementById("js-home-btn") as HTMLButtonElement,
   newTripForm = document.getElementById("js-new-trip-form") as HTMLElement,
-  newTripBtn = document.getElementById("js-new-trip-btn") as HTMLButtonElement,
+  // newTripBtn = document.getElementById("js-new-trip-btn") as HTMLButtonElement,
   newTripInputs = [
     ...document.querySelectorAll("new-trip-input"),
   ] as HTMLInputElement[],
@@ -43,7 +46,7 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   inputErrorDisplay = document.getElementById(
     "js-input-error-display"
   ) as HTMLElement,
-  modals = document.querySelectorAll(".modal") as HTMLElement[],
+  modals = document.querySelectorAll(".modal") as NodeListOf<Element>,
   overlay = document.getElementById("js-overlay") as HTMLElement,
   accountModal = document.getElementById("js-account-modal") as HTMLElement,
   accountInfoInputs = [
@@ -96,10 +99,14 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
 // Atomic Functions
 
 //convert to react component
-let makeNewTrip = (): TripType => {
-  let newDestination = destinations.find(
-    (dest: DestinationType) => dest.destination === destinationInput?.value
-  );
+let makeNewTrip = (): TripType | undefined => {
+  let newDestination =
+    destinations.find(
+      (dest: DestinationType) => dest.destination === destinationInput?.value
+    ) || null;
+
+  if (!newDestination) return;
+
   let newTrip = new Trip(
     {
       id: Date.now(),
@@ -109,13 +116,14 @@ let makeNewTrip = (): TripType => {
         dayjs(startDateInput.value),
         "days"
       ),
-      travelers: numTravelersInput.value,
+      travelers: Number(numTravelersInput.value),
       status: "pending",
       suggestedActivities: [],
       date: dayjs(startDateInput.value).format("YYYY/MM/DD"),
     },
     newDestination
   );
+
   return newTrip;
 };
 
@@ -128,6 +136,7 @@ let makeTripArray = (data: TripType[], userID?: number) => {
     let destination = destinations.find(
       (dest: DestinationType) => dest.id === trip.destinationID
     );
+
     return new Trip(trip, destination);
   });
 };
@@ -147,11 +156,11 @@ let checkIfInputsAreValid = () => {
     : false;
 };
 
-let getTripDetails = (): TripType | undefined => {
-  return currentUser.trips?.find(
-    (trip: TripType) => trip.id === Number(event?.target?.id)
-  );
-};
+// let getTripDetails = (): TripType | undefined => {
+//   return currentUser.trips?.find(
+//     (trip: TripType) => trip.id === Number(event?.target?.id)
+//   );
+// };
 
 // DOM functions
 
@@ -249,11 +258,11 @@ let displayRandomDestination = () => {
   adPrice.innerHTML = `$${randomDestination.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
 };
 
-let updateDOMAfterInput = () => {
-  displayTripCards(currentUser.trips);
-  inputErrorDisplay.hidden = true;
-  clearAllInputs();
-};
+// let updateDOMAfterInput = () => {
+//   displayTripCards(currentUser.trips);
+//   inputErrorDisplay.hidden = true;
+//   clearAllInputs();
+// };
 
 let populateAccountModal = (user: UserType) => {
   let accountInfoInputsData = [
@@ -384,10 +393,10 @@ newTripInputs.forEach((input) =>
 newTripForm.addEventListener("change", () => {
   event?.preventDefault();
   if (checkIfInputsAreValid()) {
-    inputErrorDisplay.hidden = false;
-    inputErrorDisplay.innerText = `Estimated Cost: $${
-      makeNewTrip().totalPrice
-    }`;
+    // inputErrorDisplay.hidden = false;
+    // inputErrorDisplay.innerText = `Estimated Cost: $${
+    //   makeNewTrip().totalPrice
+    // }`;
   }
 });
 
@@ -409,6 +418,8 @@ newTripForm.addEventListener("change", () => {
 logInBtn.addEventListener("click", () => {
   let userNameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
 
+  console.log("test");
+
   if (
     usernameInput.value &&
     userNameRegEx.test(usernameInput.value) &&
@@ -424,14 +435,17 @@ logInBtn.addEventListener("click", () => {
     //     })
     //     .catch((err) => console.log(err));
     // }
+    let userId = 0;
 
-    let userId =
-      usernameInput.value.match(/^traveler([1-9]|[1-4][0-9]|50)$/)[1] ?? 0;
+    // if (usernameInput.value.includes("traveler"))
+    //   userId = usernameInput.value.match(/^traveler([1-9]|[1-4][0-9]|50)$/)[1];
 
-    let user_trips = makeTripArray(trips, Number(userId));
-    currentUser = new User(travelers, user_trips);
+    // let user_trips = makeTripArray(trips, Number(userId));
+    // const traveler = travelers.find((user) => user.id == userId);
 
-    updateDOMForUser(currentUser);
+    // currentUser = new User(travelers.find(), user_trips);
+
+    // updateDOMForUser(currentUser);
   } else {
     logInError.hidden = false;
     logInError.innerText = "Enter A Valid User Name and Password";
@@ -491,13 +505,13 @@ logInBtn.addEventListener("click", () => {
 
 //Other Event Listeners
 
-cardBox.addEventListener("click", () => {
-  if (event?.target?.classList.contains("js-view-details")) {
-    homeBtn.hidden = false;
-    handleNavigation("trip details");
-    displayTripDetailsInfo(getTripDetails());
-  }
-});
+// cardBox.addEventListener("click", () => {
+//   if (event?.target?.classList.contains("js-view-details")) {
+//     homeBtn.hidden = false;
+//     handleNavigation("trip details");
+//     displayTripDetailsInfo(getTripDetails());
+//   }
+// });
 
 homeBtn.addEventListener("click", () => {
   homeBtn.hidden = true;
