@@ -1,74 +1,104 @@
 import User from "./clasess/User.ts";
 import Trip from "./clasess/Trip";
 import dayjs from "dayjs";
-import Agent from "./clasess/Agent";
-import { displayYearlyProfitChart } from "./charts";
-import { postNewTrip } from "./fetches";
-import { updateTrip } from "./fetches";
-import { deleteTrip } from "./fetches";
-import { fetchGetAll } from "./fetches";
+// import Agent from "./clasess/Agent";
+// import { displayYearlyProfitChart } from "./charts";
+// import { postNewTrip } from "./fetches.js";
+// import { updateTrip } from "./fetches";
+// import { deleteTrip } from "./fetches";
+// import { fetchGetAll } from "./fetches";
 import { displayTripCards } from "./cards";
-import { displayRequestCards } from "./cards";
-import { displayUserCards } from "./cards";
+// import { displayRequestCards } from "./cards";
+// import { displayUserCards } from "./cards";
 import { destinations } from "../test/test-data/destination-test-data.js";
 import { trips } from "../test/test-data/trips-test-data.js";
 import { travelers } from "../test/test-data/user-test-data.js";
-import type { TripType } from "./types.ts";
+import type { TripType, DestinationType, UserType, ViewType } from "./types.ts";
 
 // Global Variables
-let currentUser;
+let currentUser: UserType;
 
 // Query Selectors
-const mainTitle = document.getElementById("js-main-title"),
-  mainBox = document.getElementById("js-main"),
-  cardBox = document.getElementById("js-card-box"),
-  accountBtn = document.getElementById("js-account-btn"),
-  homeBtn = document.getElementById("js-home-btn"),
-  newTripForm = document.getElementById("js-new-trip-form"),
-  newTripBtn = document.getElementById("js-new-trip-btn"),
-  newTripInputs = [...document.querySelectorAll("new-trip-input")],
-  numTravelersInput = document.getElementById("js-num-travelers-input"),
-  destinationInput = document.getElementById("js-destination-input"),
-  destinationList = document.getElementById("destinationList"),
-  startDateInput = document.getElementById("js-start-date"),
-  endDateInput = document.getElementById("js-end-date"),
-  inputErrorDisplay = document.getElementById("js-input-error-display"),
-  modals = document.querySelectorAll(".modal"),
-  overlay = document.getElementById("js-overlay"),
-  accountModal = document.getElementById("js-account-modal"),
-  accountInfo = [...document.querySelectorAll(".js-account-info")],
-  modalCloseBtns = [...document.querySelectorAll(".close-modal-btn")],
-  logInModal = document.getElementById("js-log-in-modal"),
-  logInBtn = document.getElementById("js-log-in-btn"),
-  logOutBtn = document.getElementById("js-log-out-btn"),
-  logInError = document.getElementById("js-log-in-error"),
-  usernameInput = document.getElementById("js-username-input"),
-  passwordInput = document.getElementById("js-password-input"),
-  allInputs = [...document.querySelectorAll("input")],
-  agentViewContainer = document.getElementById("js-agent-container"),
+const mainTitle = document.getElementById("js-main-title") as HTMLElement,
+  mainBox = document.getElementById("js-main") as HTMLElement,
+  cardBox = document.getElementById("js-card-box") as HTMLElement,
+  accountBtn = document.getElementById("js-account-btn") as HTMLButtonElement,
+  homeBtn = document.getElementById("js-home-btn") as HTMLButtonElement,
+  newTripForm = document.getElementById("js-new-trip-form") as HTMLElement,
+  newTripBtn = document.getElementById("js-new-trip-btn") as HTMLButtonElement,
+  newTripInputs = [
+    ...document.querySelectorAll("new-trip-input"),
+  ] as HTMLInputElement[],
+  numTravelersInput = document.getElementById(
+    "js-num-travelers-input"
+  ) as HTMLInputElement,
+  destinationInput = document.getElementById(
+    "js-destination-input"
+  ) as HTMLInputElement,
+  destinationList = document.getElementById(
+    "destinationList"
+  ) as HTMLInputElement,
+  startDateInput = document.getElementById("js-start-date") as HTMLInputElement,
+  endDateInput = document.getElementById("js-end-date") as HTMLInputElement,
+  inputErrorDisplay = document.getElementById(
+    "js-input-error-display"
+  ) as HTMLElement,
+  modals = document.querySelectorAll(".modal") as HTMLElement[],
+  overlay = document.getElementById("js-overlay") as HTMLElement,
+  accountModal = document.getElementById("js-account-modal") as HTMLElement,
+  accountInfoInputs = [
+    ...document.querySelectorAll(".js-account-info"),
+  ] as HTMLInputElement[],
+  modalCloseBtns = [
+    ...document.querySelectorAll(".close-modal-btn"),
+  ] as HTMLButtonElement[],
+  logInModal = document.getElementById("js-log-in-modal") as HTMLElement,
+  logInBtn = document.getElementById("js-log-in-btn") as HTMLButtonElement,
+  logOutBtn = document.getElementById("js-log-out-btn") as HTMLButtonElement,
+  logInError = document.getElementById("js-log-in-error") as HTMLElement,
+  usernameInput = document.getElementById(
+    "js-username-input"
+  ) as HTMLInputElement,
+  passwordInput = document.getElementById(
+    "js-password-input"
+  ) as HTMLInputElement,
+  allInputs = [...document.querySelectorAll("input")] as HTMLInputElement[],
+  agentViewContainer = document.getElementById(
+    "js-agent-container"
+  ) as HTMLElement,
   agentTitle = document.getElementById("js-agent-title"),
   yearlyProfitChart = document.getElementById("js-yearly-profit-chart"),
-  financesBox = document.getElementById("js-finances-box"),
-  financesBtn = document.getElementById("js-finances-btn"),
-  requestsBox = document.getElementById("js-request-box"),
-  requestsCardsBox = document.getElementById("js-requests-cards-box"),
-  searchUsersInput = document.getElementById("js-agent-serach-input"),
-  requestBtn = document.getElementById("js-request-btn"),
-  agentNavBtns = [...document.querySelectorAll(".agent-nav-btn")],
+  financesBox = document.getElementById("js-finances-box") as HTMLElement,
+  financesBtn = document.getElementById("js-finances-btn") as HTMLButtonElement,
+  requestsBox = document.getElementById("js-request-box") as HTMLElement,
+  requestsCardsBox = document.getElementById(
+    "js-requests-cards-box"
+  ) as HTMLElement,
+  searchUsersInput = document.getElementById(
+    "js-agent-serach-input"
+  ) as HTMLInputElement,
+  requestBtn = document.getElementById("js-request-btn") as HTMLButtonElement,
+  agentNavBtns = [
+    ...document.querySelectorAll(".agent-nav-btn"),
+  ] as HTMLButtonElement[],
   financesDataPoints = [...document.querySelectorAll(".js-finances-data")],
-  tripDetailsView = document.getElementById("js-trip-details-view"),
-  tripDetailsHeader = document.getElementById("js-trip-view-header"),
-  tripDetails = [...document.querySelectorAll(".trip-detail")],
-  adBackground = document.getElementById("js-ad-background"),
-  adDestination = document.getElementById("js-ad-destination"),
-  adPrice = document.getElementById("js-ad-price");
+  tripDetailsView = document.getElementById(
+    "js-trip-details-view"
+  ) as HTMLElement,
+  tripDetailsHeader = document.getElementById(
+    "js-trip-view-header"
+  ) as HTMLElement,
+  tripDetails = [...document.querySelectorAll(".trip-detail")] as HTMLElement[],
+  adBackground = document.getElementById("js-ad-background") as HTMLElement,
+  adDestination = document.getElementById("js-ad-destination") as HTMLElement,
+  adPrice = document.getElementById("js-ad-price") as HTMLElement;
 
 // Atomic Functions
 
 //convert to react component
 let makeNewTrip = (): TripType => {
   let newDestination = destinations.find(
-    (dest) => dest.destination === destinationInput.value
+    (dest: DestinationType) => dest.destination === destinationInput?.value
   );
   let newTrip = new Trip(
     {
@@ -89,13 +119,14 @@ let makeNewTrip = (): TripType => {
   return newTrip;
 };
 
-let makeTripArray = (data, userID) => {
+let makeTripArray = (data: TripType[], userID?: number) => {
   userID
-    ? (data = data.filter((trip) => trip.userID === Number(userID)))
+    ? (data = data.filter((trip: TripType) => trip.userID === userID))
     : null;
+
   return data.map((trip) => {
     let destination = destinations.find(
-      (dest) => dest.id === trip.destinationID
+      (dest: DestinationType) => dest.id === trip.destinationID
     );
     return new Trip(trip, destination);
   });
@@ -106,7 +137,9 @@ let checkIfInputsAreValid = () => {
   let numRegEx = /^([1-9]|[1-9][0-9]|[1-2][0-9]{2}|3[0-5][0-9]|36[0-5])$/;
 
   return newTripInputs.every((input) => input.value) &&
-    destinations.find((dest) => dest.destination === destinationInput.value) &&
+    destinations.find(
+      (dest: DestinationType) => dest.destination === destinationInput.value
+    ) &&
     dateRegEx.test(`${startDateInput.value}`) &&
     dateRegEx.test(`${endDateInput.value}`) &&
     numRegEx.test(`${numTravelersInput.value}`)
@@ -114,8 +147,10 @@ let checkIfInputsAreValid = () => {
     : false;
 };
 
-let getTripDetails = () => {
-  return currentUser.trips.find((trip) => trip.id === Number(event.target.id));
+let getTripDetails = (): TripType | undefined => {
+  return currentUser.trips?.find(
+    (trip: TripType) => trip.id === Number(event?.target?.id)
+  );
 };
 
 // DOM functions
@@ -132,7 +167,7 @@ let hideDOM = () => {
   tripDetailsView.hidden = true;
 };
 
-let handleNavigation = (viewToShow) => {
+let handleNavigation = (viewToShow: ViewType) => {
   clearAllInputs();
   hideDOM();
 
@@ -162,13 +197,13 @@ let handleNavigation = (viewToShow) => {
   }
 };
 
-let resetDetails = (data, elements) => {
+let resetDetails = (data: string[], elements: HTMLElement[]) => {
   elements.forEach((elem, index) => {
     elem.innerText = data[index];
   });
 };
 
-let resetData = (dataWanted) => {
+let resetData = (dataWanted: "trip" | "account") => {
   let resetData;
   switch (dataWanted) {
     case "account": {
@@ -200,8 +235,8 @@ let closeModals = () => {
   overlay.classList.remove("active-overlay");
 };
 
-let populateDestinationList = (destinations) => {
-  destinations.forEach((destination) => {
+let populateDestinationList = (destinations: DestinationType[]) => {
+  destinations.forEach((destination: DestinationType) => {
     destinationList.innerHTML += `<option value='${destination.destination}'>`;
   });
 };
@@ -220,22 +255,24 @@ let updateDOMAfterInput = () => {
   clearAllInputs();
 };
 
-let populateAccountModal = (user) => {
-  let accountInfoData = [
+let populateAccountModal = (user: UserType) => {
+  let accountInfoInputsData = [
     user.name,
     user.travelerType,
-    Math.floor(user.totalSpentOnTrips()),
-    user.trips.length,
+    Math.floor(0),
+    user.trips?.length,
   ];
 
-  accountInfo.forEach((elem, index) => {
-    elem.innerText += ` ${accountInfoData[index]}`;
+  accountInfoInputs.forEach((elem, index) => {
+    elem.innerText += ` ${accountInfoInputsData[index]}`;
   });
 };
 
-let displayTripDetailsInfo = (trip) => {
+let displayTripDetailsInfo = (trip: TripType | undefined) => {
+  if (!trip) return;
+
   let tripDetailsData = [
-    trip.destination.destination,
+    trip.destination?.destination,
     trip.date,
     trip.endDate,
     trip.status,
@@ -243,13 +280,13 @@ let displayTripDetailsInfo = (trip) => {
     trip.totalPrice,
   ];
 
-  tripDetailsHeader.style.backgroundImage = `url(${trip.image})`;
+  tripDetailsHeader.style.backgroundImage = `url(${trip.destination?.image})`;
   tripDetails.forEach((elem, index) => {
     elem.innerText += ` ${tripDetailsData[index]}`;
   });
 };
 
-let updateDOMForUser = (currentUser) => {
+let updateDOMForUser = (currentUser: UserType) => {
   mainTitle.innerText = `${currentUser.name.split(" ")[0]}'s Trips`;
   handleNavigation("user");
   populateAccountModal(currentUser);
@@ -261,21 +298,30 @@ let updateDOMForUser = (currentUser) => {
 // Agent Mode DOM
 // let setAgentUser = (data, charts) => {
 //   destinations = data[2].destinations;
-//   currentUser = new Agent(data[0].travelers, makeTripArray(data[1].trips), data[2].destinations);
+//   currentUser = new Agent(
+//     data[0].travelers,
+//     makeTripArray(data[1].trips),
+//     data[2].destinations
+//   );
 
-//   requestsCardsBox.innerHTML = ''
-//   displayRequestCards(currentUser.tripsData.filter(trip => trip.status === 'pending'), currentUser);
+//   requestsCardsBox.innerHTML = "";
+//   displayRequestCards(
+//     currentUser.tripsData.filter((trip) => trip.status === "pending"),
+//     currentUser
+//   );
 //   displayFinanceData();
-//   charts ? displayYearlyProfitChart(yearlyProfitChart, dataForYearlyChart()) : null;
+//   charts
+//     ? displayYearlyProfitChart(yearlyProfitChart, dataForYearlyChart())
+//     : null;
 // };
 
-// let handleAgentNav = (header) => {
-//   financesBtn.toggleAttribute('hidden');
-//   financesBox.toggleAttribute('hidden');
-//   requestsBox.toggleAttribute('hidden');
-//   requestBtn.toggleAttribute('hidden');
+// let handleAgentNav = (header: string) => {
+//   financesBtn.toggleAttribute("hidden");
+//   financesBox.toggleAttribute("hidden");
+//   requestsBox.toggleAttribute("hidden");
+//   requestBtn.toggleAttribute("hidden");
 //   agentTitle.innerText = header;
-// }
+// };
 
 // let displayFinanceData = () => {
 //   let totalFinanceData = [
@@ -284,26 +330,37 @@ let updateDOMForUser = (currentUser) => {
 //     currentUser.getTotalForYear(2022),
 //     currentUser.getAverageProfit(),
 //     currentUser.getTotalUserAverage(),
-//     currentUser.getUsersCurrentlyTraveling()
+//     currentUser.getUsersCurrentlyTraveling(),
 //   ];
 
-//   financesDataPoints.forEach((span, index) => span.innerHTML = `${totalFinanceData[index]}`);
+//   financesDataPoints.forEach(
+//     (span, index) => (span.innerHTML = `${totalFinanceData[index]}`)
+//   );
 // };
 
 // let dataForYearlyChart = () => {
 //   let years = [2019, 2020, 2021, 2022, 2023];
-//   return years.map(year => ( { profit: currentUser.getTotalForYear(year), year: year}));
+//   return years.map((year) => ({
+//     profit: currentUser.getTotalForYear(year),
+//     year: year,
+//   }));
 // };
 
 // let searchByName = () => {
 //   return currentUser.usersData
-//     .filter(user => user.name.toLowerCase().includes(`${ searchUsersInput.value.toLowerCase() }`))
-//     .map(user => currentUser.tripsData.filter(trip => trip.userID === user.id))
+//     .filter((user) =>
+//       user.name
+//         .toLowerCase()
+//         .includes(`${searchUsersInput.value.toLowerCase()}`)
+//     )
+//     .map((user) =>
+//       currentUser.tripsData.filter((trip) => trip.userID === user.id)
+//     )
 //     .flat();
 // };
 
 // let filterByStatus = (trips, status) => {
-//   return trips.filter(trip => trip.status === status);
+//   return trips.filter((trip) => trip.status === status);
 // };
 
 // Event Listeners
@@ -320,12 +377,12 @@ startDateInput.addEventListener("change", () => {
 
 newTripInputs.forEach((input) =>
   input.addEventListener("submit", () => {
-    event.preventDefault();
+    event?.preventDefault();
   })
 );
 
 newTripForm.addEventListener("change", () => {
-  event.preventDefault();
+  event?.preventDefault();
   if (checkIfInputsAreValid()) {
     inputErrorDisplay.hidden = false;
     inputErrorDisplay.innerText = `Estimated Cost: $${
@@ -335,10 +392,10 @@ newTripForm.addEventListener("change", () => {
 });
 
 newTripBtn.addEventListener("click", () => {
-  event.preventDefault();
+  event?.preventDefault();
   if (checkIfInputsAreValid()) {
     postNewTrip(makeNewTrip()).then(() => {
-      currentUser.trips.push(makeNewTrip());
+      currentUser.trips?.push(makeNewTrip());
       updateDOMAfterInput();
     });
   } else {
@@ -353,36 +410,28 @@ logInBtn.addEventListener("click", () => {
   let userNameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
 
   if (
+    usernameInput.value &&
     userNameRegEx.test(usernameInput.value) &&
     passwordInput.value === "travel"
   ) {
     closeModals();
     logInError.hidden = true;
-    if (usernameInput.value === "agent") {
-      fetchGetAll()
-        .then((data) => {
-          handleNavigation("agent");
-          setAgentUser([travelers, trips, destinations], true);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      let userId = usernameInput.value.match(
-        /^traveler([1-9]|[1-4][0-9]|50)$/
-      )[1];
-      fetchGetAll(userId)
-        .then((data) => {
-          let user_trips = makeTripArray(data(trips, userId));
-          currentUser = new User(travelers, user_trips);
+    // if (usernameInput.value === "agent") {
+    //   fetchGetAll()
+    //     .then((data) => {
+    //       handleNavigation("agent");
+    //       setAgentUser([travelers, trips, destinations], true);
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
 
-          updateDOMForUser(currentUser);
-        })
-        .catch((err) =>
-          console.log(
-            err,
-            "Server Error. Please check that API is running on Local Host 3001"
-          )
-        );
-    }
+    let userId =
+      usernameInput.value.match(/^traveler([1-9]|[1-4][0-9]|50)$/)[1] ?? 0;
+
+    let user_trips = makeTripArray(trips, Number(userId));
+    currentUser = new User(travelers, user_trips);
+
+    updateDOMForUser(currentUser);
   } else {
     logInError.hidden = false;
     logInError.innerText = "Enter A Valid User Name and Password";
@@ -391,59 +440,59 @@ logInBtn.addEventListener("click", () => {
 
 // Agent Mode Event Listeners
 
-requestsBox.addEventListener("click", (event) => {
-  if (event.target.classList.contains("approved")) {
-    updateTrip(
-      currentUser.tripsData.find(
-        (trip) => trip.id === Number(event.target.parentNode.id)
-      ),
-      `${event.target.classList}`
-    ).then(() => {
-      fetchGetAll()
-        .then((data) => {
-          handleNavigation("agent");
-          setAgentUser(data, false);
-        })
-        .catch((err) => console.log(err));
-    });
-  } else if (event.target.classList.contains("denied")) {
-    deleteTrip(event.target.parentNode.id).then(() => {
-      fetchGetAll()
-        .then((data) => {
-          handleNavigation("agent");
-          setAgentUser(data, false);
-        })
-        .catch((err) => console.log(err));
-    });
-  }
-});
+// requestsBox.addEventListener("click", (event) => {
+//   if (event.target?.classList.contains("approved")) {
+//     updateTrip(
+//       currentUser.tripsData.find(
+//         (trip: TripType) => trip.id === Number(event.target?.parentNode.id)
+//       ),
+//       `${event.target.classList}`
+//     ).then(() => {
+//       fetchGetAll()
+//         .then((data) => {
+//           handleNavigation("agent");
+//           setAgentUser(data, false);
+//         })
+//         .catch((err) => console.log(err));
+//     });
+//   } else if (event.target.classList.contains("denied")) {
+//     deleteTrip(event.target.parentNode.id).then(() => {
+//       fetchGetAll()
+//         .then((data) => {
+//           handleNavigation("agent");
+//           setAgentUser(data, false);
+//         })
+//         .catch((err) => console.log(err));
+//     });
+//   }
+// });
 
-searchUsersInput.addEventListener("input", () => {
-  requestsCardsBox.innerHTML = "";
-  if (searchUsersInput.value) {
-    displayRequestCards(filterByStatus(searchByName(), "pending"), currentUser);
-    displayUserCards(filterByStatus(searchByName(), "approved"), currentUser);
-  } else {
-    displayRequestCards(
-      currentUser.tripsData.filter((trip) => trip.status === "pending"),
-      currentUser
-    );
-  }
-});
+// searchUsersInput.addEventListener("input", () => {
+//   requestsCardsBox.innerHTML = "";
+//   if (searchUsersInput.value) {
+//     displayRequestCards(filterByStatus(searchByName(), "pending"), currentUser);
+//     displayUserCards(filterByStatus(searchByName(), "approved"), currentUser);
+//   } else {
+//     displayRequestCards(
+//       currentUser.tripsData.filter((trip) => trip.status === "pending"),
+//       currentUser
+//     );
+//   }
+// });
 
-accountBtn.addEventListener("click", () => {
-  accountModal.classList.add("active");
-  overlay.classList.add("active-overlay");
-});
+// accountBtn.addEventListener("click", () => {
+//   accountModal.classList.add("active");
+//   overlay.classList.add("active-overlay");
+// });
 
-agentNavBtns.forEach((btn) =>
-  btn.addEventListener("click", () => handleAgentNav(event.target.name))
-);
+// agentNavBtns.forEach((btn) =>
+//   btn.addEventListener("click", () => handleAgentNav(event.target.name))
+// );
 
 //Other Event Listeners
 
 cardBox.addEventListener("click", () => {
-  if (event.target.classList.contains("js-view-details")) {
+  if (event?.target?.classList.contains("js-view-details")) {
     homeBtn.hidden = false;
     handleNavigation("trip details");
     displayTripDetailsInfo(getTripDetails());
@@ -464,6 +513,6 @@ modalCloseBtns.forEach((btn) =>
 );
 
 logOutBtn.addEventListener("click", () => {
-  resetDetails(resetData("account"), accountInfo);
+  resetDetails(resetData("account"), accountInfoInputs);
   handleNavigation("log out");
 });
