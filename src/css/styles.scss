@@ -1,0 +1,61 @@
+// Imports
+@use "./variables";
+@use "./mixins";
+@use "./user-view/trip";
+@use "./user-view/header";
+@use "./user-view/form";
+@use "./user-view/trip-details";
+@use "./user-view/advertisment";
+@use "./modals/modal";
+@use "./agent-view/agent-mode";
+@use "./agent-view/requests";
+@use "./modals/log-in-modal";
+@use "./modals/account-modal";
+
+* {
+  font-family: "Open Sans", sans-serif;
+
+  &:focus {
+    border: solid 1px #085da8;
+  }
+}
+
+html,
+body {
+  @include flex-column;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+main {
+  @include flex-column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 800px;
+  color: white;
+}
+
+h1 {
+  margin: 0px;
+}
+
+h2 {
+  color: black;
+  margin-bottom: 10px;
+  font-family: "Nanum Myeongjo", serif;
+  font-size: 30px;
+}
+
+span {
+  color: $red;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+[hidden] {
+  display: none;
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Open+Sans:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datepickerjs/dist/datepicker.min.css">
+    <title>Wander</title>
+  </head>
+<body>
+    <header class="main-header">
+        <section class="header-box">
+            <h1><em class="page-title" tabindex="0">wander</em></h1>
+                <div class="nav-btn-box" id="">
+                    <button class="nav-btn" id="js-home-btn" tabindex="0" hidden>Home</button>
+                    <button class="nav-btn" id="js-account-btn" tabindex="0">Account</button>
+            </nav>
+        </section>
+    </header>
+    <section id="js-ad-background" class="ad-background" hidden>
+        <form class="new-trip-form"  id="js-new-trip-form">
+            <section class="destination input-box">
+                <h2><label for="js-destination-input">Where to? <span>*</span></label></h2>
+                <input type="text" class="destination-input new-trip-input" id="js-destination-input"
+                    list="destinationList" placeholder="Choose destination...">
+                <datalist id="destinationList">
+                </datalist>
+            </section>
+            <section class="travel-date input-box">
+                <h2><label for="date-inputs">Select Dates <span>*</span></label></h2>
+                <div id="date-inputs">
+                    <input class="new-trip-input" id="js-start-date" type="date" aria-label="start-date-input" placeholder="Start Date">
+                    <input class="new-trip-input" id="js-end-date" type="date" aria-label="end-date-input" placeholder="End Date" disabled>
+                </div>
+            </section>
+            <section class="num-travlers input-box">
+                <h2><label for="js-num-travelers-input">Number of Travelers <span>*</span></label></h2>
+                <div>
+                    <input class="new-trip-input" id="js-num-travelers-input" placeholder="Number of Travelers">
+                    <button class="new-trip-btn" id="js-new-trip-btn">Let's Wander</button>
+                </div>
+            </section>
+            <h3 id="js-input-error-display" class="input-error-display" hidden></h3>
+        </form>
+        <section class="advertisment" id="js-ad-box">
+            <em class="ad-wander">wander </em>
+            <h2 class="ad-destination" id="js-ad-destination"></h2>
+            <h5 class="ad-price" id="js-ad-price"></h5>
+        </section>
+    </section>
+    <main class="main" id="js-main" hidden>
+        <h2 id="js-main-title"></h2>
+        <section class="agent-box" id="js-agent-container" hidden>
+            <header class="agent-view-header" id="js-agent-header">
+                <h2 class="agent-title" id="js-agent-title">Finances</h2>
+                <nav>
+                    <button class="agent-nav-btn" id="js-finances-btn" name="Finances" hidden>Finances</button>
+                    <button class="agent-nav-btn" id="js-request-btn" name="Requests">Requests</button>
+                </nav>
+            </header>
+            <section class="agent-finances-box" id="js-finances-box">
+                <p tabindex="0" class="chart yearly-profit-chart"><canvas id="js-yearly-profit-chart" width="400"
+                        height="200"></canvasid></canvas></p>
+                <div id="js-total-data-points">
+                    <p class="finances-data">Total Profit: $<span class="js-finances-data"></span></p>
+                    <p class="finances-data">Current Year Profit: $<span class="js-finances-data"></span></p>
+                    <p class="finances-data">Last Year Profit: $<span class="js-finances-data"></span></p>
+                    <p class="finances-data">Average Year Profit: $<span class="js-finances-data"></span></p>
+                    <p class="finances-data">Total Users: <span>50</span> </p>
+                    <p class="finances-data">Profit from an Average User: $<span class="js-finances-data"></span></p>
+                    <p class="finances-data">Users Currnetly Traveling <span class="js-finances-data"></span></p>
+                </div>
+            </section>
+            <section class="request-view-box" id="js-request-box" hidden>
+                <input class="agent-search-input" id="js-agent-serach-input" placeholder="Search requests by user name">
+                <section class="request-cards-box" id="js-requests-cards-box">
+                </section>
+            </section>
+        </section>
+
+        <section id='js-card-box' class="card-container">
+        </section>
+
+        <section class="trip-details-view" id="js-trip-details-view" hidden>
+            <div class="trip-view-header" id="js-trip-view-header"></div>
+            <section class="trip-details-info">
+                <ul class="trip-details">
+                    <h2 class="trip-detail"></h2>
+                    <li><span class="trip-detail"></span>  -  <span class="trip-detail"></span> </li>
+                    <li class="trip-detail">Status: </li>
+                    <li class="trip-detail">Number of Travelers: </li>
+                    <li class="trip-detail">Total Price: $ </li>
+                </ul>
+                <div class="event-details">
+                    <h3>No Events Yet!</h3>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <div class="modal login-modal active" id="js-log-in-modal" aria-hidden="true">
+        <div data-micromodal-close>
+            <form class="log-in-content" class="" role="dialog" aria-modal="true">
+                <h2>Log In</h2>
+                <div class="log-in-input-box">
+                    <h3>Username</h3>
+                    <input id="js-username-input">
+                </div>
+                <div class="log-in-input-box">
+                    <h3>Password</h3>
+                    <input id="js-password-input">
+                </div>
+                <btn class="log-in-btn" id="js-log-in-btn">Enter</btn>
+                <span class="log-in-error " id="js-log-in-error" hidden></span>
+            </form>
+        </div>
+    </div>
+    <div class="modal account-modal" aria-hidden="true" id="js-account-modal">
+        <div tabindex="-1" data-micromodal-close>
+            <div class="account-box" role="dialog" aria-modal="true">
+                <header class="account-modal-header">
+                    <h2>Account Info</h2>
+                    <button class="close-modal-btn " aria-label="Close modal" data-micromodal-close>&times;</button>
+                </header>
+                <ul>
+                    <h3 class="js-account-info" id="js-account-name"></h3>
+                    <li class="js-account-info">Traveler type: </li>
+                    <li class="js-account-info" id="js-account-total">Total spent on trips: $</li>
+                    <li class="js-account-info">Total Amount of Trips Taken:</li>
+                </ul>
+                <button class="log-out-btn" id="js-log-out-btn">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay active-overlay" id="js-overlay"></div>
+    <script type = "bundle" src="/src/main.ts"></script>
+</body>
+</html>
