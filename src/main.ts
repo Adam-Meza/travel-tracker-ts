@@ -10,9 +10,9 @@ import dayjs from "dayjs";
 import { displayTripCards } from "./cards";
 // import { displayRequestCards } from "./cards";
 // import { displayUserCards } from "./cards";
-import { destinations } from "../test/test-data/destination-test-data.js";
-import { trips } from "../test/test-data/trips-test-data.js";
-import { travelers } from "../test/test-data/user-test-data.js";
+import { destinations } from "../test/test-data/destination-test-data.ts";
+import { trips } from "../test/test-data/trips-test-data.ts";
+import { travelers } from "../test/test-data/user-test-data.ts";
 import type { TripType, DestinationType, UserType, ViewType } from "./types.ts";
 
 // Global Variables
@@ -22,7 +22,7 @@ let currentUser: UserType;
 const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   mainBox = document.getElementById("js-main") as HTMLElement,
   cardBox = document.getElementById("js-card-box") as HTMLElement,
-  accountBtn = document.getElementById("js-account-btn") as HTMLButtonElement,
+  // accountBtn = document.getElementById("js-account-btn") as HTMLButtonElement,
   homeBtn = document.getElementById("js-home-btn") as HTMLButtonElement,
   newTripForm = document.getElementById("js-new-trip-form") as HTMLElement,
   newTripBtn = document.getElementById("js-new-trip-btn") as HTMLButtonElement,
@@ -63,25 +63,25 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
     "js-password-input"
   ) as HTMLInputElement,
   allInputs = [...document.querySelectorAll("input")] as HTMLInputElement[],
-  agentViewContainer = document.getElementById(
-    "js-agent-container"
-  ) as HTMLElement,
-  agentTitle = document.getElementById("js-agent-title"),
-  yearlyProfitChart = document.getElementById("js-yearly-profit-chart"),
-  financesBox = document.getElementById("js-finances-box") as HTMLElement,
-  financesBtn = document.getElementById("js-finances-btn") as HTMLButtonElement,
-  requestsBox = document.getElementById("js-request-box") as HTMLElement,
-  requestsCardsBox = document.getElementById(
-    "js-requests-cards-box"
-  ) as HTMLElement,
-  searchUsersInput = document.getElementById(
-    "js-agent-serach-input"
-  ) as HTMLInputElement,
-  requestBtn = document.getElementById("js-request-btn") as HTMLButtonElement,
-  agentNavBtns = [
-    ...document.querySelectorAll(".agent-nav-btn"),
-  ] as HTMLButtonElement[],
-  financesDataPoints = [...document.querySelectorAll(".js-finances-data")],
+  // agentViewContainer = document.getElementById(
+  //   "js-agent-container"
+  // ) as HTMLElement,
+  // agentTitle = document.getElementById("js-agent-title"),
+  // yearlyProfitChart = document.getElementById("js-yearly-profit-chart"),
+  // financesBox = document.getElementById("js-finances-box") as HTMLElement,
+  // financesBtn = document.getElementById("js-finances-btn") as HTMLButtonElement,
+  // requestsBox = document.getElementById("js-request-box") as HTMLElement,
+  // requestsCardsBox = document.getElementById(
+  //   "js-requests-cards-box"
+  // ) as HTMLElement,
+  // searchUsersInput = document.getElementById(
+  //   "js-agent-serach-input"
+  // ) as HTMLInputElement,
+  // requestBtn = document.getElementById("js-request-btn") as HTMLButtonElement,
+  // agentNavBtns = [
+  //   ...document.querySelectorAll(".agent-nav-btn"),
+  // ] as HTMLButtonElement[],
+  // financesDataPoints = [...document.querySelectorAll(".js-finances-data")],
   tripDetailsView = document.getElementById(
     "js-trip-details-view"
   ) as HTMLElement,
@@ -161,7 +161,7 @@ let clearAllInputs = () => {
 
 let hideDOM = () => {
   mainBox.hidden = true;
-  agentViewContainer.hidden = true;
+  // agentViewContainer.hidden = true;
   adBackground.hidden = true;
   cardBox.hidden = true;
   tripDetailsView.hidden = true;
@@ -180,7 +180,7 @@ let handleNavigation = (viewToShow: ViewType) => {
     }
     case "agent": {
       mainBox.hidden = false;
-      agentViewContainer.hidden = false;
+      // agentViewContainer.hidden = false;
       mainTitle.innerText = "Agent Portal";
       break;
     }
@@ -391,18 +391,18 @@ newTripForm.addEventListener("change", () => {
   }
 });
 
-newTripBtn.addEventListener("click", () => {
-  event?.preventDefault();
-  if (checkIfInputsAreValid()) {
-    postNewTrip(makeNewTrip()).then(() => {
-      currentUser.trips?.push(makeNewTrip());
-      updateDOMAfterInput();
-    });
-  } else {
-    inputErrorDisplay.hidden = false;
-    inputErrorDisplay.innerText = "Please fill out all the inputs";
-  }
-});
+// newTripBtn.addEventListener("click", () => {
+//   event?.preventDefault();
+//   if (checkIfInputsAreValid()) {
+//     postNewTrip(makeNewTrip()).then(() => {
+//       currentUser.trips?.push(makeNewTrip());
+//       updateDOMAfterInput();
+//     });
+//   } else {
+//     inputErrorDisplay.hidden = false;
+//     inputErrorDisplay.innerText = "Please fill out all the inputs";
+//   }
+// });
 
 //Login Button Listener
 
