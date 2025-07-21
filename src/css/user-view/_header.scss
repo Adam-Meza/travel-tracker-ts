@@ -1,15 +1,13 @@
 @use "../variables";
 @use "../mixins" as *;
 
-header {
+header.main-header {
   @include flex-row;
+  align-items: center;
   justify-content: space-between;
-  background: white;
   width: 90%;
   height: 15vh;
   border-bottom: $grey-border;
-  padding: 0px 0px 0px 100px;
-  align-items: center;
   color: $red;
 }
 
@@ -33,11 +31,10 @@ header {
 .nav-btn-box {
   @include flex-row;
   justify-content: space-between;
-  align-items: flex-end;
-  width: 250px;
 }
 
 .nav-btn {
   @include btn-styling;
   @include white-red;
+  margin: 0px 10px;
 }

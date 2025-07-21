@@ -5,10 +5,10 @@
   @include flex-row;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 96%;
   height: fit-content !important;
   background-position: center center;
-  padding: 30px;
+  padding: 2%;
 
   .advertisment {
     @include flex-column;

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import type { UserType, TripType } from "../types";
 
 class User {
@@ -10,16 +11,27 @@ class User {
     (this.id = travelerObj.id),
       (this.name = travelerObj.name),
       (this.travelerType = travelerObj.travelerType);
-    this.trips = trips;
+    this.trips = this.formatTripData(trips);
   }
 
-  // totalSpentOnTrips() {
-  //   return !this.trips
-  //     ? "Trips Data is undefined"
-  //     : this.trips.reduce((acc, currentTrip) => {
-  //         return currentTrip (acc += currentTrip.totalPrice);
-  //       }, 0);
-  // }
+  totalSpentOnTrips() {
+    return !this.trips
+      ? "Trips Data is undefined"
+      : this.trips.reduce((acc, currentTrip) => {
+          //@ts-ignore
+          return (acc += currentTrip?.totalPrice);
+        }, 0);
+  }
+
+  formatTripData(trips: TripType[]) {
+    const temp = trips;
+
+    temp.forEach(
+      (trip: TripType) => (trip.date = dayjs(trip.date).format("MM-DD-YYYY"))
+    );
+
+    return temp;
+  }
 }
 
 export default User;

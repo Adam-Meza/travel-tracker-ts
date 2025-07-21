@@ -87,7 +87,7 @@ let makeNewTrip = (): TripType => {
       travelers: Number(numTravelersInput.value),
       status: "pending",
       suggestedActivities: [],
-      date: dayjs(startDateInput.value).format("YYYY/MM/DD"),
+      date: dayjs(startDateInput.value).format("MM-DD-YYYY"),
     },
     newDestination
   );
@@ -172,13 +172,13 @@ const handleNavigation = (viewToShow: ViewType) => {
   }
 };
 
-let resetDetails = (data: string[], elements: HTMLElement[]) => {
+const resetDetails = (data: string[], elements: HTMLElement[]) => {
   elements.forEach((elem, index) => {
     elem.innerText = data[index];
   });
 };
 
-let resetData = (dataWanted: "trip" | "account") => {
+const resetData = (dataWanted: "trip" | "account") => {
   let resetData;
   switch (dataWanted) {
     case "account": {
@@ -205,30 +205,31 @@ let resetData = (dataWanted: "trip" | "account") => {
   return resetData;
 };
 
-let closeModals = () => {
+const closeModals = () => {
   modals.forEach((modal: HTMLElement) => (modal.hidden = true));
   overlay.classList.remove("active-overlay");
 };
 
-let populateDestinationList = (destinations: DestinationType[]) => {
+const populateDestinationList = (destinations: DestinationType[]) => {
   destinations.forEach((destination: DestinationType) => {
     destinationList.innerHTML += `<option value='${destination.destination}'>`;
   });
 };
 
-let displayRandomDestination = () => {
-  let randomIndex = Math.floor(Math.random() * 50);
-  let randomDestination = destinations[randomIndex];
-  adBackground.style.backgroundImage = `url(${randomDestination.image})`;
-  adDestination.innerText = randomDestination.destination.split(", ")[0];
-  adPrice.innerHTML = `$${randomDestination.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
+const displayRandomDestination = () => {
+  const n = Math.floor(Math.random() * 50);
+  const rand_dest = destinations[n];
+
+  adBackground.style.backgroundImage = `url(${rand_dest.image})`;
+  adDestination.innerText = rand_dest.destination.split(", ")[0];
+  adPrice.innerHTML = `$${rand_dest.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
 };
 
-// let updateDOMAfterInput = () => {
-//   displayTripCards(currentUser.trips);
-//   inputErrorDisplay.hidden = true;
-//   clearAllInputs();
-// };
+const updateDOMAfterInput = () => {
+  displayTripCards(currentUser.trips);
+  inputErrorDisplay.hidden = true;
+  clearAllInputs();
+};
 
 let populateAccountModal = (user: UserType) => {
   let accountInfoInputsData = [
@@ -243,10 +244,10 @@ let populateAccountModal = (user: UserType) => {
   });
 };
 
-let displayTripDetailsInfo = (trip: TripType | undefined) => {
+const displayTripDetailsInfo = (trip: TripType | undefined) => {
   if (!trip) return;
 
-  let tripDetailsData = [
+  const tripDetailsData = [
     trip.destination?.destination,
     trip.date,
     trip.endDate,
@@ -261,7 +262,7 @@ let displayTripDetailsInfo = (trip: TripType | undefined) => {
   });
 };
 
-let updateDOMForUser = (currentUser: UserType) => {
+const updateDOMForUser = (currentUser: UserType) => {
   mainTitle.innerText = `${currentUser.name.split(" ")[0]}'s Trips`;
   handleNavigation("user");
   populateAccountModal(currentUser);
@@ -273,9 +274,8 @@ let updateDOMForUser = (currentUser: UserType) => {
 // Event Listeners
 // New Trip Inputs/Button Event Listeners
 
-endDateInput.setAttribute("min", dayjs().format("YYYY-MM-DD"));
-
-startDateInput.setAttribute("min", dayjs().format("YYYY-MM-DD"));
+endDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
+startDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
 
 startDateInput.addEventListener("change", () => {
   endDateInput.disabled = false;
@@ -301,8 +301,10 @@ newTripForm.addEventListener("change", () => {
 newTripBtn.addEventListener("click", () => {
   event?.preventDefault();
   if (checkIfInputsAreValid()) {
-    postNewTrip(makeNewTrip()).then(() => {
-      if (makeNewTrip()) currentUser.trips?.push(makeNewTrip());
+    const new_trip = makeNewTrip();
+
+    postNewTrip(new_trip).then(() => {
+      if (new_trip) currentUser.trips?.push(new_trip);
       updateDOMAfterInput();
     });
   } else {
@@ -314,9 +316,7 @@ newTripBtn.addEventListener("click", () => {
 //Login Button Listener
 
 logInBtn.addEventListener("click", () => {
-  let userNameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
-
-  console.log("test");
+  const userNameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
 
   if (
     usernameInput.value &&
@@ -326,8 +326,8 @@ logInBtn.addEventListener("click", () => {
     closeModals();
     logInError.hidden = true;
 
-    let userId = Number(usernameInput.value.slice(-1));
-    let user_trips = makeTripArray(trips, userId);
+    const userId = Number(usernameInput.value.slice(-1));
+    const user_trips = makeTripArray(trips, userId);
     const traveler = travelers.find((user) => user.id == userId);
 
     if (traveler) currentUser = new User(traveler, user_trips);
@@ -338,64 +338,16 @@ logInBtn.addEventListener("click", () => {
     logInError.innerText = "Enter A Valid User Name and Password";
   }
 });
-
-// Agent Mode Event Listeners
-
-// requestsBox.addEventListener("click", (event) => {
-//   if (event.target?.classList.contains("approved")) {
-//     updateTrip(
-//       currentUser.tripsData.find(
-//         (trip: TripType) => trip.id === Number(event.target?.parentNode.id)
-//       ),
-//       `${event.target.classList}`
-//     ).then(() => {
-//       fetchGetAll()
-//         .then((data) => {
-//           handleNavigation("agent");
-//           setAgentUser(data, false);
-//         })
-//         .catch((err) => console.log(err));
-//     });
-//   } else if (event.target.classList.contains("denied")) {
-//     deleteTrip(event.target.parentNode.id).then(() => {
-//       fetchGetAll()
-//         .then((data) => {
-//           handleNavigation("agent");
-//           setAgentUser(data, false);
-//         })
-//         .catch((err) => console.log(err));
-//     });
-//   }
-// });
-
-// searchUsersInput.addEventListener("input", () => {
-//   requestsCardsBox.innerHTML = "";
-//   if (searchUsersInput.value) {
-//     displayRequestCards(filterByStatus(searchByName(), "pending"), currentUser);
-//     displayUserCards(filterByStatus(searchByName(), "approved"), currentUser);
-//   } else {
-//     displayRequestCards(
-//       currentUser.tripsData.filter((trip) => trip.status === "pending"),
-//       currentUser
-//     );
-//   }
-// });
-
 accountBtn.addEventListener("click", () => {
   accountModal.removeAttribute("hidden");
   overlay.classList.add("active-overlay");
 });
-
-// agentNavBtns.forEach((btn) =>
-//   btn.addEventListener("click", () => handleAgentNav(event.target.name))
-// );
 
 //Other Event Listeners
 
 cardBox.addEventListener("click", () => {
   if (event?.target?.classList.contains("js-view-details")) {
     homeBtn.hidden = false;
-    console.log("here");
     handleNavigation("trip details");
     displayTripDetailsInfo(getTripDetails());
   }

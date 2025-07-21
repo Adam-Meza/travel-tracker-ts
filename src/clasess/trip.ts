@@ -12,7 +12,7 @@ class Trip {
   travelers: number;
   destination: DestinationType;
   image: string;
-  // endDate = this.getEndDate();
+  endDate = this.getEndDate();
 
   constructor(
     tripObj: TripType,
@@ -35,7 +35,7 @@ class Trip {
     this.travelers = tripObj.travelers;
     this.destination = destination;
     this.image = this.destination.image;
-    // this.endDate = this.getEndDate();
+    this.endDate = this.getEndDate();
   }
 
   calculatePrice() {
