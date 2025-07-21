@@ -25,10 +25,10 @@ console.log("test");
 const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   mainBox = document.getElementById("js-main") as HTMLElement,
   cardBox = document.getElementById("js-card-box") as HTMLElement,
-  // accountBtn = document.getElementById("js-account-btn") as HTMLButtonElement,
+  accountBtn = document.getElementById("js-account-btn") as HTMLButtonElement,
   homeBtn = document.getElementById("js-home-btn") as HTMLButtonElement,
   newTripForm = document.getElementById("js-new-trip-form") as HTMLElement,
-  // newTripBtn = document.getElementById("js-new-trip-btn") as HTMLButtonElement,
+  newTripBtn = document.getElementById("js-new-trip-btn") as HTMLButtonElement,
   newTripInputs = [
     ...document.querySelectorAll("new-trip-input"),
   ] as HTMLInputElement[],
@@ -98,20 +98,24 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
 
 // Atomic Functions
 
-//convert to react component
-let makeNewTrip = (): TripType | undefined => {
-  let newDestination =
-    destinations.find(
-      (dest: DestinationType) => dest.destination === destinationInput?.value
-    ) || null;
+// check if a specific destination from destinations array
+const checkDest: boolean = (dest_ID: number) => {
+  return destinations.find((dest) => dest.id == dest_ID);
+};
 
-  if (!newDestination) return;
+//convert to react component
+let makeNewTrip = (): TripType => {
+  const dest_ID = Number(destinationInput?.value) || 0;
+
+  let newDestination = destinations.find(
+    (dest: DestinationType) => dest.id === dest_ID
+  );
 
   let newTrip = new Trip(
     {
       id: Date.now(),
       userID: currentUser.id,
-      destinationID: newDestination.id,
+      destinationID: dest_ID,
       duration: dayjs(endDateInput.value).diff(
         dayjs(startDateInput.value),
         "days"
@@ -156,11 +160,11 @@ let checkIfInputsAreValid = () => {
     : false;
 };
 
-// let getTripDetails = (): TripType | undefined => {
-//   return currentUser.trips?.find(
-//     (trip: TripType) => trip.id === Number(event?.target?.id)
-//   );
-// };
+let getTripDetails = (): TripType | undefined => {
+  return currentUser.trips?.find(
+    (trip: TripType) => trip.id === Number(event?.target?.id)
+  );
+};
 
 // DOM functions
 
@@ -393,25 +397,25 @@ newTripInputs.forEach((input) =>
 newTripForm.addEventListener("change", () => {
   event?.preventDefault();
   if (checkIfInputsAreValid()) {
-    // inputErrorDisplay.hidden = false;
-    // inputErrorDisplay.innerText = `Estimated Cost: $${
-    //   makeNewTrip().totalPrice
-    // }`;
+    inputErrorDisplay.hidden = false;
+    inputErrorDisplay.innerText = `Estimated Cost: $${
+      makeNewTrip().totalPrice
+    }`;
   }
 });
 
-// newTripBtn.addEventListener("click", () => {
-//   event?.preventDefault();
-//   if (checkIfInputsAreValid()) {
-//     postNewTrip(makeNewTrip()).then(() => {
-//       currentUser.trips?.push(makeNewTrip());
-//       updateDOMAfterInput();
-//     });
-//   } else {
-//     inputErrorDisplay.hidden = false;
-//     inputErrorDisplay.innerText = "Please fill out all the inputs";
-//   }
-// });
+newTripBtn.addEventListener("click", () => {
+  event?.preventDefault();
+  if (checkIfInputsAreValid()) {
+    // postNewTrip(makeNewTrip()).then(() => {
+    //   if (makeNewTrip()) currentUser.trips?.push(makeNewTrip());
+    //   updateDOMAfterInput();
+    // });
+  } else {
+    inputErrorDisplay.hidden = false;
+    inputErrorDisplay.innerText = "Please fill out all the inputs";
+  }
+});
 
 //Login Button Listener
 
@@ -435,17 +439,13 @@ logInBtn.addEventListener("click", () => {
     //     })
     //     .catch((err) => console.log(err));
     // }
-    let userId = 0;
+    let userId = Number(usernameInput.value.slice(-1));
+    let user_trips = makeTripArray(trips, userId);
+    const traveler = travelers.find((user) => user.id == userId);
 
-    // if (usernameInput.value.includes("traveler"))
-    //   userId = usernameInput.value.match(/^traveler([1-9]|[1-4][0-9]|50)$/)[1];
+    if (traveler) currentUser = new User(traveler, user_trips);
 
-    // let user_trips = makeTripArray(trips, Number(userId));
-    // const traveler = travelers.find((user) => user.id == userId);
-
-    // currentUser = new User(travelers.find(), user_trips);
-
-    // updateDOMForUser(currentUser);
+    updateDOMForUser(currentUser);
   } else {
     logInError.hidden = false;
     logInError.innerText = "Enter A Valid User Name and Password";
@@ -494,10 +494,10 @@ logInBtn.addEventListener("click", () => {
 //   }
 // });
 
-// accountBtn.addEventListener("click", () => {
-//   accountModal.classList.add("active");
-//   overlay.classList.add("active-overlay");
-// });
+accountBtn.addEventListener("click", () => {
+  accountModal.classList.add("active");
+  overlay.classList.add("active-overlay");
+});
 
 // agentNavBtns.forEach((btn) =>
 //   btn.addEventListener("click", () => handleAgentNav(event.target.name))
@@ -505,13 +505,14 @@ logInBtn.addEventListener("click", () => {
 
 //Other Event Listeners
 
-// cardBox.addEventListener("click", () => {
-//   if (event?.target?.classList.contains("js-view-details")) {
-//     homeBtn.hidden = false;
-//     handleNavigation("trip details");
-//     displayTripDetailsInfo(getTripDetails());
-//   }
-// });
+cardBox.addEventListener("click", () => {
+  if (event?.target?.classList.contains("js-view-details")) {
+    homeBtn.hidden = false;
+    console.log("here");
+    handleNavigation("trip details");
+    displayTripDetailsInfo(getTripDetails());
+  }
+});
 
 homeBtn.addEventListener("click", () => {
   homeBtn.hidden = true;
