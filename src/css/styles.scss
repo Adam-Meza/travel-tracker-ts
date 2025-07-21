@@ -7,8 +7,6 @@
 @use "./user-view/trip-details";
 @use "./user-view/advertisment";
 @use "./modals/modal";
-@use "./agent-view/agent-mode";
-@use "./agent-view/requests";
 @use "./modals/log-in-modal";
 @use "./modals/account-modal";
 
@@ -24,7 +22,6 @@ html,
 body {
   @include flex-column;
   align-items: center;
-
   width: 100%;
   height: 100%;
   padding: 0px;

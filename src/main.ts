@@ -300,6 +300,7 @@ newTripForm.addEventListener("change", () => {
 
 newTripBtn.addEventListener("click", () => {
   event?.preventDefault();
+
   if (checkIfInputsAreValid()) {
     const new_trip = makeNewTrip();
 

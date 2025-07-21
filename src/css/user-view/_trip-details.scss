@@ -1,9 +1,13 @@
 @import "../variables";
 @import "../mixins";
-@import "../agent-view/agent-mode";
 
 .trip-details-view {
-  @extend .agent-box;
+  @include flex-column;
+  align-items: flex-start;
+  border: $grey-border;
+  background-color: white;
+  color: black;
+  padding: 0px 40px;
   padding: 0px;
   justify-content: space-evenly;
 
