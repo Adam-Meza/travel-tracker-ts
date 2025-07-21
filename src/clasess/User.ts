@@ -8,9 +8,9 @@ class User {
   travelerType?: string;
 
   constructor(travelerObj: UserType, trips: TripType[]) {
-    (this.id = travelerObj.id),
-      (this.name = travelerObj.name),
-      (this.travelerType = travelerObj.travelerType);
+    this.id = travelerObj.id;
+    this.name = travelerObj.name;
+    this.travelerType = travelerObj.travelerType;
     this.trips = this.formatTripData(trips);
   }
 

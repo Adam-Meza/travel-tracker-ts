@@ -2,9 +2,6 @@ import dayjs from "dayjs";
 import type { TripType } from "./types";
 
 const cardBox = document.getElementById("js-card-box") as HTMLElement;
-// requestsCardsBox = document.getElementById(
-//   "js-requests-cards-box"
-// ) as HTMLElement;
 
 const displayTripCards = (trips: TripType[] | undefined) => {
   cardBox.hidden = false;

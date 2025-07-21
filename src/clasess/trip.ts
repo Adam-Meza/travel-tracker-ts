@@ -12,7 +12,8 @@ class Trip {
   travelers: number;
   destination: DestinationType;
   image: string;
-  endDate = this.getEndDate();
+  endDate: string;
+  totalPrice: number;
 
   constructor(
     tripObj: TripType,
@@ -25,25 +26,28 @@ class Trip {
       alt: "",
     }
   ) {
-    (this.id = tripObj.id),
-      (this.userID = tripObj.userID),
-      (this.destinationID = tripObj.destinationID),
-      (this.date = tripObj.date),
-      (this.duration = tripObj.duration),
-      (this.status = tripObj.status),
-      (this.suggestedActivities = tripObj.suggestedActivities);
+    this.id = tripObj.id;
+    this.userID = tripObj.userID;
+    this.destinationID = tripObj.destinationID;
+    this.date = tripObj.date;
+    this.duration = tripObj.duration;
+    this.status = tripObj.status;
+    this.suggestedActivities = tripObj.suggestedActivities;
     this.travelers = tripObj.travelers;
     this.destination = destination;
     this.image = this.destination.image;
     this.endDate = this.getEndDate();
+    this.totalPrice = this.calculatePrice();
   }
 
   calculatePrice() {
-    let totalLogdging =
+    const totalLogdging =
       this.duration * this.destination.estimatedLodgingCostPerDay;
-    let flightCost =
+
+    const flightCost =
       this.destination.estimatedFlightCostPerPerson * this.travelers;
-    let total = (totalLogdging + flightCost) * 1.1;
+
+    const total = (totalLogdging + flightCost) * 1.1;
     return total;
   }
 

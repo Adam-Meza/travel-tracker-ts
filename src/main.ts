@@ -7,6 +7,13 @@ import { destinations } from "../test/test-data/destination-test-data.ts";
 import { trips } from "../test/test-data/trips-test-data.ts";
 import { travelers } from "../test/test-data/user-test-data.ts";
 import type { TripType, DestinationType, UserType, ViewType } from "./types.ts";
+import {
+  makeNewTrip,
+  findUsersTrips,
+  checkIfInputsAreValid,
+  getTripDetails,
+  resetData,
+} from "./helpers.ts";
 
 // Global Variables
 let currentUser: UserType;
@@ -22,12 +29,6 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   newTripInputs = [
     ...document.querySelectorAll("new-trip-input"),
   ] as HTMLInputElement[],
-  numTravelersInput = document.getElementById(
-    "js-num-travelers-input"
-  ) as HTMLInputElement,
-  destinationInput = document.getElementById(
-    "js-destination-input"
-  ) as HTMLInputElement,
   destinationList = document.getElementById(
     "destinationList"
   ) as HTMLInputElement,
@@ -64,72 +65,6 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   adBackground = document.getElementById("js-ad-background") as HTMLElement,
   adDestination = document.getElementById("js-ad-destination") as HTMLElement,
   adPrice = document.getElementById("js-ad-price") as HTMLElement;
-
-// Atomic Functions
-
-//convert to react component
-let makeNewTrip = (): TripType => {
-  const dest_ID = Number(destinationInput?.value) || 0;
-
-  let newDestination = destinations.find(
-    (dest: DestinationType) => dest.id === dest_ID
-  );
-
-  let newTrip = new Trip(
-    {
-      id: Date.now(),
-      userID: currentUser.id,
-      destinationID: dest_ID,
-      duration: dayjs(endDateInput.value).diff(
-        dayjs(startDateInput.value),
-        "days"
-      ),
-      travelers: Number(numTravelersInput.value),
-      status: "pending",
-      suggestedActivities: [],
-      date: dayjs(startDateInput.value).format("MM-DD-YYYY"),
-    },
-    newDestination
-  );
-
-  return newTrip;
-};
-
-const makeTripArray = (data: TripType[], userID?: number) => {
-  userID
-    ? (data = data.filter((trip: TripType) => trip.userID === userID))
-    : null;
-
-  return data.map((trip) => {
-    let destination = destinations.find(
-      (dest: DestinationType) => dest.id === trip.destinationID
-    );
-
-    return new Trip(trip, destination);
-  });
-};
-
-const checkIfInputsAreValid = () => {
-  const dateRegEx =
-    /^(20[0-3][0-9]|2040)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-  const numRegEx = /^([1-9]|[1-9][0-9]|[1-2][0-9]{2}|3[0-5][0-9]|36[0-5])$/;
-
-  return newTripInputs.every((input) => input.value) &&
-    destinations.find(
-      (dest: DestinationType) => dest.destination === destinationInput.value
-    ) &&
-    dateRegEx.test(`${startDateInput.value}`) &&
-    dateRegEx.test(`${endDateInput.value}`) &&
-    numRegEx.test(`${numTravelersInput.value}`)
-    ? true
-    : false;
-};
-
-const getTripDetails = (): TripType | undefined => {
-  return currentUser.trips?.find(
-    (trip: TripType) => trip.id === Number(event?.target?.id)
-  );
-};
 
 // DOM functions
 const clearAllInputs = () => {
@@ -176,33 +111,6 @@ const resetDetails = (data: string[], elements: HTMLElement[]) => {
   elements.forEach((elem, index) => {
     elem.innerText = data[index];
   });
-};
-
-const resetData = (dataWanted: "trip" | "account") => {
-  let resetData;
-  switch (dataWanted) {
-    case "account": {
-      resetData = [
-        "",
-        "Traveler type:",
-        "Total spent on trips: $",
-        "Total Amount of Trips Taken:",
-      ];
-      break;
-    }
-    case "trip": {
-      resetData = [
-        "",
-        "",
-        "",
-        "Status: ",
-        "Number of Travelers: ",
-        "Total Price: $ ",
-      ];
-      break;
-    }
-  }
-  return resetData;
 };
 
 const closeModals = () => {
@@ -293,7 +201,7 @@ newTripForm.addEventListener("change", () => {
   if (checkIfInputsAreValid()) {
     inputErrorDisplay.hidden = false;
     inputErrorDisplay.innerText = `Estimated Cost: $${
-      makeNewTrip().totalPrice
+      makeNewTrip(currentUser).totalPrice
     }`;
   }
 });
@@ -302,7 +210,7 @@ newTripBtn.addEventListener("click", () => {
   event?.preventDefault();
 
   if (checkIfInputsAreValid()) {
-    const new_trip = makeNewTrip();
+    const new_trip = makeNewTrip(currentUser);
 
     postNewTrip(new_trip).then(() => {
       if (new_trip) currentUser.trips?.push(new_trip);
@@ -328,7 +236,7 @@ logInBtn.addEventListener("click", () => {
     logInError.hidden = true;
 
     const userId = Number(usernameInput.value.slice(-1));
-    const user_trips = makeTripArray(trips, userId);
+    const user_trips = findUsersTrips(trips, userId);
     const traveler = travelers.find((user) => user.id == userId);
 
     if (traveler) currentUser = new User(traveler, user_trips);
@@ -350,7 +258,7 @@ cardBox.addEventListener("click", () => {
   if (event?.target?.classList.contains("js-view-details")) {
     homeBtn.hidden = false;
     handleNavigation("trip details");
-    displayTripDetailsInfo(getTripDetails());
+    displayTripDetailsInfo(getTripDetails(currentUser));
   }
 });
 
