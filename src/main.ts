@@ -1,4 +1,4 @@
-import "./css/styles.css";
+import "./css/styles.scss";
 import User from "./clasess/User.ts";
 import Trip from "./clasess/trip.ts";
 import dayjs from "dayjs";
@@ -17,9 +17,7 @@ import { travelers } from "../test/test-data/user-test-data.ts";
 import type { TripType, DestinationType, UserType, ViewType } from "./types.ts";
 
 // Global Variables
-let currentUser: UserType = travelers[0];
-
-console.log("test");
+let currentUser: UserType;
 
 // Query Selectors
 const mainTitle = document.getElementById("js-main-title") as HTMLElement,
@@ -97,11 +95,6 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   adPrice = document.getElementById("js-ad-price") as HTMLElement;
 
 // Atomic Functions
-
-// check if a specific destination from destinations array
-const checkDest: boolean = (dest_ID: number) => {
-  return destinations.find((dest) => dest.id == dest_ID);
-};
 
 //convert to react component
 let makeNewTrip = (): TripType => {
@@ -407,10 +400,10 @@ newTripForm.addEventListener("change", () => {
 newTripBtn.addEventListener("click", () => {
   event?.preventDefault();
   if (checkIfInputsAreValid()) {
-    // postNewTrip(makeNewTrip()).then(() => {
-    //   if (makeNewTrip()) currentUser.trips?.push(makeNewTrip());
-    //   updateDOMAfterInput();
-    // });
+    postNewTrip(makeNewTrip()).then(() => {
+      if (makeNewTrip()) currentUser.trips?.push(makeNewTrip());
+      updateDOMAfterInput();
+    });
   } else {
     inputErrorDisplay.hidden = false;
     inputErrorDisplay.innerText = "Please fill out all the inputs";

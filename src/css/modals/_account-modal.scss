@@ -1,3 +1,6 @@
+@import "../variables";
+@import "../mixins";
+
 .account-modal {
   @include flex-column;
   justify-content: space-between;

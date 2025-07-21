@@ -1,17 +1,20 @@
-@import '../variables';
+@import "../variables";
+@import "../mixins";
+@import "../agent-view/agent-mode";
 
 .trip-details-view {
-  @extend .agent-box ;
+  @extend .agent-box;
   padding: 0px;
   justify-content: space-evenly;
 
-  .trip-view-header{
+  .trip-view-header {
     height: 400px;
     width: 800px;
     margin: 20px;
     background-position-x: center;
     background-position-y: center;
   }
+
   .trip-details-info {
     @include flex-row;
     justify-content: space-evenly;
@@ -23,8 +26,9 @@
       margin: 5px;
     }
   }
-  
-  .event-details, .trip-details {
+
+  .event-details,
+  .trip-details {
     width: 40%;
     height: 300px;
   }
@@ -42,8 +46,7 @@
     justify-content: center;
     height: 90%;
     width: 400px;
-    background-color: rgb(207, 207, 207); 
+    background-color: rgb(207, 207, 207);
     color: grey;
   }
 }
-

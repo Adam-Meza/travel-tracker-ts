@@ -1,4 +1,7 @@
+@use "../user-view/header";
+
 @import "../variables";
+@import "../mixins";
 
 .agent-box {
   @include flex-column;
