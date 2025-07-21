@@ -63,7 +63,7 @@ export const checkIfInputsAreValid = () => {
 
   return newTripInputs.every((input) => input.value) &&
     destinations.find(
-      (dest: DestinationType) => dest.destination === destinationInput.value
+      (dest: DestinationType) => dest.location === destinationInput.value
     ) &&
     dateRegEx.test(`${startDateInput.value}`) &&
     dateRegEx.test(`${endDateInput.value}`) &&
@@ -74,6 +74,7 @@ export const checkIfInputsAreValid = () => {
 
 export const getTripDetails = (currentUser: UserType): TripType | undefined => {
   return currentUser.trips?.find(
+    //@ts-ignore
     (trip: TripType) => trip.id === Number(event?.target?.id)
   );
 };

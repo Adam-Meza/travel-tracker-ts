@@ -120,7 +120,7 @@ const closeModals = () => {
 
 const populateDestinationList = (destinations: DestinationType[]) => {
   destinations.forEach((destination: DestinationType) => {
-    destinationList.innerHTML += `<option value='${destination.destination}'>`;
+    destinationList.innerHTML += `<option value='${destination.location}'>`;
   });
 };
 
@@ -129,7 +129,7 @@ const displayRandomDestination = () => {
   const rand_dest = destinations[n];
 
   adBackground.style.backgroundImage = `url(${rand_dest.image})`;
-  adDestination.innerText = rand_dest.destination.split(", ")[0];
+  adDestination.innerText = rand_dest.location.split(", ")[0];
   adPrice.innerHTML = `$${rand_dest.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
 };
 
@@ -156,7 +156,7 @@ const displayTripDetailsInfo = (trip: TripType | undefined) => {
   if (!trip) return;
 
   const tripDetailsData = [
-    trip.destination?.destination,
+    trip.destination?.location,
     trip.date,
     trip.endDate,
     trip.status,

@@ -14,7 +14,7 @@ export type TripType = {
 
 export type DestinationType = {
   id: number;
-  destination: string; // CHANGE THIS TO LOCATION
+  location: string;
   estimatedLodgingCostPerDay: number;
   estimatedFlightCostPerPerson: number;
   image: string;

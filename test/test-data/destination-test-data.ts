@@ -3,7 +3,7 @@ import type { DestinationType } from "../../src/types";
 const destinations: DestinationType[] = [
   {
     id: 1,
-    destination: "Lima, Peru",
+    location: "Lima, Peru",
     estimatedLodgingCostPerDay: 70,
     estimatedFlightCostPerPerson: 400,
     image:
@@ -12,7 +12,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 2,
-    destination: "Stockholm, Sweden",
+    location: "Stockholm, Sweden",
     estimatedLodgingCostPerDay: 100,
     estimatedFlightCostPerPerson: 780,
     image:
@@ -21,7 +21,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 3,
-    destination: "Sydney, Austrailia",
+    location: "Sydney, Austrailia",
     estimatedLodgingCostPerDay: 130,
     estimatedFlightCostPerPerson: 950,
     image:
@@ -30,7 +30,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 4,
-    destination: "Cartagena, Colombia",
+    location: "Cartagena, Colombia",
     estimatedLodgingCostPerDay: 65,
     estimatedFlightCostPerPerson: 350,
     image:
@@ -39,7 +39,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 5,
-    destination: "Madrid, Spain",
+    location: "Madrid, Spain",
     estimatedLodgingCostPerDay: 150,
     estimatedFlightCostPerPerson: 650,
     image:
@@ -48,7 +48,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 6,
-    destination: "Jakarta, Indonesia",
+    location: "Jakarta, Indonesia",
     estimatedLodgingCostPerDay: 70,
     estimatedFlightCostPerPerson: 890,
     image:
@@ -57,7 +57,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 7,
-    destination: "Paris, France",
+    location: "Paris, France",
     estimatedLodgingCostPerDay: 100,
     estimatedFlightCostPerPerson: 395,
     image:
@@ -66,7 +66,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 8,
-    destination: "Tokyo, Japan",
+    location: "Tokyo, Japan",
     estimatedLodgingCostPerDay: 125,
     estimatedFlightCostPerPerson: 1000,
     image:
@@ -75,7 +75,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 9,
-    destination: "Amsterdam, Netherlands",
+    location: "Amsterdam, Netherlands",
     estimatedLodgingCostPerDay: 100,
     estimatedFlightCostPerPerson: 950,
     image:
@@ -84,7 +84,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 10,
-    destination: "Toronto, Canada",
+    location: "Toronto, Canada",
     estimatedLodgingCostPerDay: 90,
     estimatedFlightCostPerPerson: 450,
     alt: "",
@@ -93,7 +93,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 11,
-    destination: "Mikonos, Greece",
+    location: "Mikonos, Greece",
     estimatedLodgingCostPerDay: 140,
     estimatedFlightCostPerPerson: 1000,
     image:
@@ -102,7 +102,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 12,
-    destination: "Wellington, New Zealand",
+    location: "Wellington, New Zealand",
     estimatedLodgingCostPerDay: 150,
     estimatedFlightCostPerPerson: 1200,
     image:
@@ -111,7 +111,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 13,
-    destination: "St. Petersburg, Russia",
+    location: "St. Petersburg, Russia",
     estimatedLodgingCostPerDay: 100,
     estimatedFlightCostPerPerson: 1100,
     image:
@@ -120,7 +120,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 14,
-    destination: "Marrakesh, Morocco",
+    location: "Marrakesh, Morocco",
     estimatedLodgingCostPerDay: 70,
     estimatedFlightCostPerPerson: 830,
     image:
@@ -129,7 +129,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 15,
-    destination: "Manila, Philippines",
+    location: "Manila, Philippines",
     estimatedLodgingCostPerDay: 40,
     estimatedFlightCostPerPerson: 900,
     image:
@@ -138,7 +138,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 16,
-    destination: "Bangkok, Thailand",
+    location: "Bangkok, Thailand",
     estimatedLodgingCostPerDay: 35,
     estimatedFlightCostPerPerson: 988,
     image:
@@ -147,7 +147,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 17,
-    destination: "Jaipur, India",
+    location: "Jaipur, India",
     estimatedLodgingCostPerDay: 30,
     estimatedFlightCostPerPerson: 1200,
     image:
@@ -156,7 +156,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 18,
-    destination: "Cape Town, South Africa",
+    location: "Cape Town, South Africa",
     estimatedLodgingCostPerDay: 120,
     estimatedFlightCostPerPerson: 1200,
     image:
@@ -165,7 +165,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 19,
-    destination: "Quito, Ecuador",
+    location: "Quito, Ecuador",
     estimatedLodgingCostPerDay: 60,
     estimatedFlightCostPerPerson: 500,
     image:
@@ -174,7 +174,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 20,
-    destination: "Miami, Florida",
+    location: "Miami, Florida",
     estimatedLodgingCostPerDay: 158,
     estimatedFlightCostPerPerson: 275,
     image:
@@ -183,7 +183,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 21,
-    destination: "Tulum, Mexico",
+    location: "Tulum, Mexico",
     estimatedLodgingCostPerDay: 100,
     estimatedFlightCostPerPerson: 350,
     image:
@@ -192,7 +192,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 22,
-    destination: "Rome, Italy",
+    location: "Rome, Italy",
     estimatedLodgingCostPerDay: 90,
     estimatedFlightCostPerPerson: 650,
     image:
@@ -201,7 +201,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 23,
-    destination: "Copenhagen, Denmark",
+    location: "Copenhagen, Denmark",
     estimatedLodgingCostPerDay: 120,
     estimatedFlightCostPerPerson: 1000,
     image:
@@ -210,7 +210,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 24,
-    destination: "Vilnius, Lithuania",
+    location: "Vilnius, Lithuania",
     estimatedLodgingCostPerDay: 65,
     estimatedFlightCostPerPerson: 1100,
     image:
@@ -219,7 +219,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 25,
-    destination: "New York, New York",
+    location: "New York, New York",
     estimatedLodgingCostPerDay: 175,
     estimatedFlightCostPerPerson: 200,
     image:
@@ -228,7 +228,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 26,
-    destination: "London, England",
+    location: "London, England",
     estimatedLodgingCostPerDay: 100,
     estimatedFlightCostPerPerson: 1000,
     image:
@@ -237,7 +237,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 27,
-    destination: "San Francisco, California",
+    location: "San Francisco, California",
     estimatedLodgingCostPerDay: 175,
     estimatedFlightCostPerPerson: 200,
     image:
@@ -246,7 +246,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 28,
-    destination: "San Juan, Puerto Rico",
+    location: "San Juan, Puerto Rico",
     estimatedLodgingCostPerDay: 70,
     estimatedFlightCostPerPerson: 900,
     image:
@@ -255,7 +255,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 29,
-    destination: "Willemstad, Curaçao",
+    location: "Willemstad, Curaçao",
     estimatedLodgingCostPerDay: 80,
     estimatedFlightCostPerPerson: 1100,
     image:
@@ -264,7 +264,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 30,
-    destination: "Antananarivo, Madagascar",
+    location: "Antananarivo, Madagascar",
     estimatedLodgingCostPerDay: 70,
     estimatedFlightCostPerPerson: 1200,
     image:
@@ -273,7 +273,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 31,
-    destination: "Colombo, Sri Lanka",
+    location: "Colombo, Sri Lanka",
     estimatedLodgingCostPerDay: 55,
     estimatedFlightCostPerPerson: 1300,
     image:
@@ -282,7 +282,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 32,
-    destination: "Kathmandu, Nepal",
+    location: "Kathmandu, Nepal",
     estimatedLodgingCostPerDay: 45,
     estimatedFlightCostPerPerson: 1200,
     image:
@@ -291,7 +291,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 33,
-    destination: "Brussels, Belgium",
+    location: "Brussels, Belgium",
     estimatedLodgingCostPerDay: 1000,
     estimatedFlightCostPerPerson: 110,
     image:
@@ -300,7 +300,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 34,
-    destination: "Seoul, South Korea",
+    location: "Seoul, South Korea",
     estimatedLodgingCostPerDay: 1200,
     estimatedFlightCostPerPerson: 150,
     image:
@@ -309,7 +309,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 35,
-    destination: "Anchorage, Alaska",
+    location: "Anchorage, Alaska",
     estimatedLodgingCostPerDay: 200,
     estimatedFlightCostPerPerson: 100,
     image:
@@ -318,7 +318,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 36,
-    destination: "Reykjavík, Iceland",
+    location: "Reykjavík, Iceland",
     estimatedLodgingCostPerDay: 900,
     estimatedFlightCostPerPerson: 120,
     image:
@@ -327,7 +327,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 37,
-    destination: "Frankfurt, Germany",
+    location: "Frankfurt, Germany",
     estimatedLodgingCostPerDay: 1100,
     estimatedFlightCostPerPerson: 150,
     image:
@@ -336,7 +336,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 38,
-    destination: "Helsinki, Finland",
+    location: "Helsinki, Finland",
     estimatedLodgingCostPerDay: 950,
     estimatedFlightCostPerPerson: 100,
     image:
@@ -345,7 +345,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 39,
-    destination: "Porto, Portugal",
+    location: "Porto, Portugal",
     estimatedLodgingCostPerDay: 995,
     estimatedFlightCostPerPerson: 90,
     image:
@@ -354,7 +354,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 40,
-    destination: "La Isla Tortuga, Costa Rica",
+    location: "La Isla Tortuga, Costa Rica",
     estimatedLodgingCostPerDay: 600,
     estimatedFlightCostPerPerson: 80,
     image:
@@ -363,7 +363,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 41,
-    destination: "Montego Bay, Jamaica",
+    location: "Montego Bay, Jamaica",
     estimatedLodgingCostPerDay: 500,
     estimatedFlightCostPerPerson: 100,
     image:
@@ -372,7 +372,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 42,
-    destination: "Santo Domingo, Dominican Republic",
+    location: "Santo Domingo, Dominican Republic",
     estimatedLodgingCostPerDay: 400,
     estimatedFlightCostPerPerson: 80,
     image:
@@ -381,7 +381,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 43,
-    destination: "Nassau, The Bahamas",
+    location: "Nassau, The Bahamas",
     estimatedLodgingCostPerDay: 550,
     estimatedFlightCostPerPerson: 90,
     image:
@@ -390,7 +390,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 44,
-    destination: "Caye Caulker, Belize",
+    location: "Caye Caulker, Belize",
     estimatedLodgingCostPerDay: 450,
     estimatedFlightCostPerPerson: 80,
     image:
@@ -399,7 +399,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 45,
-    destination: "Calgary, Canada",
+    location: "Calgary, Canada",
     estimatedLodgingCostPerDay: 200,
     estimatedFlightCostPerPerson: 125,
     image:
@@ -408,7 +408,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 46,
-    destination: "Victoria, Seychelles",
+    location: "Victoria, Seychelles",
     estimatedLodgingCostPerDay: 1100,
     estimatedFlightCostPerPerson: 100,
     image:
@@ -417,7 +417,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 47,
-    destination: "Zürich, Switzerland",
+    location: "Zürich, Switzerland",
     estimatedLodgingCostPerDay: 1100,
     estimatedFlightCostPerPerson: 110,
     image:
@@ -426,7 +426,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 48,
-    destination: "Dar es Salaam, Tanzania",
+    location: "Dar es Salaam, Tanzania",
     estimatedLodgingCostPerDay: 1200,
     estimatedFlightCostPerPerson: 100,
     image:
@@ -435,7 +435,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 49,
-    destination: "Castries, St Lucia",
+    location: "Castries, St Lucia",
     estimatedLodgingCostPerDay: 650,
     estimatedFlightCostPerPerson: 90,
     image:
@@ -444,7 +444,7 @@ const destinations: DestinationType[] = [
   },
   {
     id: 50,
-    destination: "Hobart, Tasmania",
+    location: "Hobart, Tasmania",
     estimatedLodgingCostPerDay: 1400,
     estimatedFlightCostPerPerson: 75,
     image:

@@ -13,7 +13,7 @@ const displayTripCards = (trips: TripType[] | undefined) => {
         <img class="trip-img js-trip-img" src="${
           trip.destination?.image
         }"alt="${trip.destination?.alt}" >
-        <h3 class="card-destination" >${trip.destination?.destination}</h3>
+        <h3 class="card-destination" >${trip.destination?.location}</h3>
         <time class="card-date" name="travel-dates">${dayjs(trip.date).format(
           "MM/DD/YYYY"
         )} - ${trip.endDate}</time>
