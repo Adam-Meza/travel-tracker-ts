@@ -2,15 +2,7 @@ import "./css/styles.scss";
 import User from "./clasess/User.ts";
 import Trip from "./clasess/trip.ts";
 import dayjs from "dayjs";
-// import Agent from "./clasess/Agent";
-// import { displayYearlyProfitChart } from "./charts";
-// import { postNewTrip } from "./fetches.js";
-// import { updateTrip } from "./fetches";
-// import { deleteTrip } from "./fetches";
-// import { fetchGetAll } from "./fetches";
 import { displayTripCards } from "./cards";
-// import { displayRequestCards } from "./cards";
-// import { displayUserCards } from "./cards";
 import { destinations } from "../test/test-data/destination-test-data.ts";
 import { trips } from "../test/test-data/trips-test-data.ts";
 import { travelers } from "../test/test-data/user-test-data.ts";
@@ -44,7 +36,7 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   inputErrorDisplay = document.getElementById(
     "js-input-error-display"
   ) as HTMLElement,
-  modals = document.querySelectorAll(".modal") as NodeListOf<Element>,
+  modals = [...document.querySelectorAll(".modal")] as HTMLElement[],
   overlay = document.getElementById("js-overlay") as HTMLElement,
   accountModal = document.getElementById("js-account-modal") as HTMLElement,
   accountInfoInputs = [
@@ -64,31 +56,10 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
     "js-password-input"
   ) as HTMLInputElement,
   allInputs = [...document.querySelectorAll("input")] as HTMLInputElement[],
-  // agentViewContainer = document.getElementById(
-  //   "js-agent-container"
-  // ) as HTMLElement,
-  // agentTitle = document.getElementById("js-agent-title"),
-  // yearlyProfitChart = document.getElementById("js-yearly-profit-chart"),
-  // financesBox = document.getElementById("js-finances-box") as HTMLElement,
-  // financesBtn = document.getElementById("js-finances-btn") as HTMLButtonElement,
-  // requestsBox = document.getElementById("js-request-box") as HTMLElement,
-  // requestsCardsBox = document.getElementById(
-  //   "js-requests-cards-box"
-  // ) as HTMLElement,
-  // searchUsersInput = document.getElementById(
-  //   "js-agent-serach-input"
-  // ) as HTMLInputElement,
-  // requestBtn = document.getElementById("js-request-btn") as HTMLButtonElement,
-  // agentNavBtns = [
-  //   ...document.querySelectorAll(".agent-nav-btn"),
-  // ] as HTMLButtonElement[],
-  // financesDataPoints = [...document.querySelectorAll(".js-finances-data")],
   tripDetailsView = document.getElementById(
     "js-trip-details-view"
   ) as HTMLElement,
-  tripDetailsHeader = document.getElementById(
-    "js-trip-view-header"
-  ) as HTMLElement,
+  tripDetailsImg = document.getElementById("js-trip-view-img") as HTMLElement,
   tripDetails = [...document.querySelectorAll(".trip-detail")] as HTMLElement[],
   adBackground = document.getElementById("js-ad-background") as HTMLElement,
   adDestination = document.getElementById("js-ad-destination") as HTMLElement,
@@ -124,7 +95,7 @@ let makeNewTrip = (): TripType => {
   return newTrip;
 };
 
-let makeTripArray = (data: TripType[], userID?: number) => {
+const makeTripArray = (data: TripType[], userID?: number) => {
   userID
     ? (data = data.filter((trip: TripType) => trip.userID === userID))
     : null;
@@ -138,9 +109,10 @@ let makeTripArray = (data: TripType[], userID?: number) => {
   });
 };
 
-let checkIfInputsAreValid = () => {
-  let dateRegEx = /^(20[0-3][0-9]|2040)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-  let numRegEx = /^([1-9]|[1-9][0-9]|[1-2][0-9]{2}|3[0-5][0-9]|36[0-5])$/;
+const checkIfInputsAreValid = () => {
+  const dateRegEx =
+    /^(20[0-3][0-9]|2040)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+  const numRegEx = /^([1-9]|[1-9][0-9]|[1-2][0-9]{2}|3[0-5][0-9]|36[0-5])$/;
 
   return newTripInputs.every((input) => input.value) &&
     destinations.find(
@@ -153,27 +125,25 @@ let checkIfInputsAreValid = () => {
     : false;
 };
 
-let getTripDetails = (): TripType | undefined => {
+const getTripDetails = (): TripType | undefined => {
   return currentUser.trips?.find(
     (trip: TripType) => trip.id === Number(event?.target?.id)
   );
 };
 
 // DOM functions
-
-let clearAllInputs = () => {
+const clearAllInputs = () => {
   allInputs.forEach((input) => (input.value = ""));
 };
 
-let hideDOM = () => {
+const hideDOM = () => {
   mainBox.hidden = true;
-  // agentViewContainer.hidden = true;
   adBackground.hidden = true;
   cardBox.hidden = true;
   tripDetailsView.hidden = true;
 };
 
-let handleNavigation = (viewToShow: ViewType) => {
+const handleNavigation = (viewToShow: ViewType) => {
   clearAllInputs();
   hideDOM();
 
@@ -186,7 +156,6 @@ let handleNavigation = (viewToShow: ViewType) => {
     }
     case "agent": {
       mainBox.hidden = false;
-      // agentViewContainer.hidden = false;
       mainTitle.innerText = "Agent Portal";
       break;
     }
@@ -196,8 +165,8 @@ let handleNavigation = (viewToShow: ViewType) => {
       break;
     }
     case "log out": {
-      accountModal.classList.remove("active");
-      logInModal.classList.add("active");
+      accountModal.hidden = true;
+      logInModal.hidden = false;
       break;
     }
   }
@@ -237,7 +206,7 @@ let resetData = (dataWanted: "trip" | "account") => {
 };
 
 let closeModals = () => {
-  modals.forEach((modal) => modal.classList.remove("active"));
+  modals.forEach((modal: HTMLElement) => (modal.hidden = true));
   overlay.classList.remove("active-overlay");
 };
 
@@ -286,7 +255,7 @@ let displayTripDetailsInfo = (trip: TripType | undefined) => {
     trip.totalPrice,
   ];
 
-  tripDetailsHeader.style.backgroundImage = `url(${trip.destination?.image})`;
+  tripDetailsImg.style.backgroundImage = `url(${trip.destination?.image})`;
   tripDetails.forEach((elem, index) => {
     elem.innerText += ` ${tripDetailsData[index]}`;
   });
@@ -300,74 +269,6 @@ let updateDOMForUser = (currentUser: UserType) => {
   populateDestinationList(destinations);
   displayRandomDestination();
 };
-
-// Agent Mode DOM
-// let setAgentUser = (data, charts) => {
-//   destinations = data[2].destinations;
-//   currentUser = new Agent(
-//     data[0].travelers,
-//     makeTripArray(data[1].trips),
-//     data[2].destinations
-//   );
-
-//   requestsCardsBox.innerHTML = "";
-//   displayRequestCards(
-//     currentUser.tripsData.filter((trip) => trip.status === "pending"),
-//     currentUser
-//   );
-//   displayFinanceData();
-//   charts
-//     ? displayYearlyProfitChart(yearlyProfitChart, dataForYearlyChart())
-//     : null;
-// };
-
-// let handleAgentNav = (header: string) => {
-//   financesBtn.toggleAttribute("hidden");
-//   financesBox.toggleAttribute("hidden");
-//   requestsBox.toggleAttribute("hidden");
-//   requestBtn.toggleAttribute("hidden");
-//   agentTitle.innerText = header;
-// };
-
-// let displayFinanceData = () => {
-//   let totalFinanceData = [
-//     currentUser.getTotalProfit(),
-//     currentUser.getTotalForYear(2023),
-//     currentUser.getTotalForYear(2022),
-//     currentUser.getAverageProfit(),
-//     currentUser.getTotalUserAverage(),
-//     currentUser.getUsersCurrentlyTraveling(),
-//   ];
-
-//   financesDataPoints.forEach(
-//     (span, index) => (span.innerHTML = `${totalFinanceData[index]}`)
-//   );
-// };
-
-// let dataForYearlyChart = () => {
-//   let years = [2019, 2020, 2021, 2022, 2023];
-//   return years.map((year) => ({
-//     profit: currentUser.getTotalForYear(year),
-//     year: year,
-//   }));
-// };
-
-// let searchByName = () => {
-//   return currentUser.usersData
-//     .filter((user) =>
-//       user.name
-//         .toLowerCase()
-//         .includes(`${searchUsersInput.value.toLowerCase()}`)
-//     )
-//     .map((user) =>
-//       currentUser.tripsData.filter((trip) => trip.userID === user.id)
-//     )
-//     .flat();
-// };
-
-// let filterByStatus = (trips, status) => {
-//   return trips.filter((trip) => trip.status === status);
-// };
 
 // Event Listeners
 // New Trip Inputs/Button Event Listeners
@@ -424,14 +325,7 @@ logInBtn.addEventListener("click", () => {
   ) {
     closeModals();
     logInError.hidden = true;
-    // if (usernameInput.value === "agent") {
-    //   fetchGetAll()
-    //     .then((data) => {
-    //       handleNavigation("agent");
-    //       setAgentUser([travelers, trips, destinations], true);
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
+
     let userId = Number(usernameInput.value.slice(-1));
     let user_trips = makeTripArray(trips, userId);
     const traveler = travelers.find((user) => user.id == userId);
@@ -488,7 +382,7 @@ logInBtn.addEventListener("click", () => {
 // });
 
 accountBtn.addEventListener("click", () => {
-  accountModal.classList.add("active");
+  accountModal.removeAttribute("hidden");
   overlay.classList.add("active-overlay");
 });
 

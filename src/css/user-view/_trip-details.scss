@@ -7,18 +7,17 @@
   padding: 0px;
   justify-content: space-evenly;
 
-  .trip-view-header {
-    height: 400px;
+  .trip-view-img {
+    height: 40vh;
     width: 800px;
-    margin: 20px;
+    background-size: cover;
     background-position-x: center;
     background-position-y: center;
   }
 
-  .trip-details-info {
+  .details-wrapper {
     @include flex-row;
     justify-content: space-evenly;
-    height: 300px;
     width: 100%;
 
     li {
@@ -27,26 +26,27 @@
     }
   }
 
-  .event-details,
-  .trip-details {
-    width: 40%;
-    height: 300px;
-  }
-
   .trip-details {
     @include flex-column;
     align-items: flex-start;
     justify-content: flex-start;
     padding: 0px;
     margin: 0px;
+    width: 40%;
+    height: 300px;
   }
 
   .event-details {
     @include flex-column;
     justify-content: center;
-    height: 90%;
     width: 400px;
-    background-color: rgb(207, 207, 207);
-    color: grey;
+
+    h3 {
+      background-color: rgb(207, 207, 207);
+      color: grey;
+      padding: 25%;
+      text-align: center;
+      text-indent: center;
+    }
   }
 }

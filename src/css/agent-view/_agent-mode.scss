@@ -1,12 +1,10 @@
 @use "../user-view/header";
-
 @import "../variables";
 @import "../mixins";
 
 .agent-box {
   @include flex-column;
   align-items: flex-start;
-  height: 90%;
   border: $grey-border;
   color: black;
   padding: 0px 40px;
@@ -21,7 +19,8 @@
 }
 
 .agent-nav-btn {
-  @extend .nav-btn;
+  @include btn-styling;
+  @include white-red;
 }
 
 .request-view-box {
