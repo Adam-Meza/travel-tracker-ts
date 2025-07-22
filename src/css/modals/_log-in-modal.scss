@@ -1,6 +1,19 @@
 @import "../variables";
 @import "../mixins";
 
+.login-modal {
+  @include flex-row;
+  width: fit-content;
+
+  .log-in-wrapper {
+    width: 50%;
+  }
+}
+
+.intro-info {
+  @include flex-column;
+}
+
 .log-in-content {
   @include flex-column;
   justify-content: center;
