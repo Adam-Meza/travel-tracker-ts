@@ -1,6 +1,5 @@
 import "./css/styles.scss";
 import User from "./clasess/User.ts";
-import Trip from "./clasess/trip.ts";
 import dayjs from "dayjs";
 import { displayTripCards } from "./cards";
 import { destinations } from "../test/test-data/destination-test-data.ts";
@@ -13,6 +12,7 @@ import {
   checkIfInputsAreValid,
   getTripDetails,
   resetData,
+  findDestination,
 } from "./helpers.ts";
 
 // Global Variables
@@ -64,7 +64,10 @@ const mainTitle = document.getElementById("js-main-title") as HTMLElement,
   tripDetails = [...document.querySelectorAll(".trip-detail")] as HTMLElement[],
   adBackground = document.getElementById("js-ad-background") as HTMLElement,
   adDestination = document.getElementById("js-ad-destination") as HTMLElement,
-  adPrice = document.getElementById("js-ad-price") as HTMLElement;
+  adPrice = document.getElementById("js-ad-price") as HTMLElement,
+  destinationInput = document.getElementById(
+    "js-destination-input"
+  ) as HTMLInputElement;
 
 // DOM functions
 const clearAllInputs = () => {
@@ -126,11 +129,11 @@ const populateDestinationList = (destinations: DestinationType[]) => {
 
 const displayRandomDestination = () => {
   const n = Math.floor(Math.random() * 50);
-  const rand_dest = destinations[n];
+  const ranDest = destinations[n];
 
-  adBackground.style.backgroundImage = `url(${rand_dest.image})`;
-  adDestination.innerText = rand_dest.location.split(", ")[0];
-  adPrice.innerHTML = `$${rand_dest.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
+  adBackground.style.backgroundImage = `url(${ranDest.image})`;
+  adDestination.innerText = ranDest.location.split(", ")[0];
+  adPrice.innerHTML = `$${ranDest.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
 };
 
 const updateDOMAfterInput = () => {
@@ -199,10 +202,14 @@ newTripInputs.forEach((input) =>
 newTripForm.addEventListener("change", () => {
   event?.preventDefault();
   if (checkIfInputsAreValid()) {
-    inputErrorDisplay.hidden = false;
-    inputErrorDisplay.innerText = `Estimated Cost: $${
-      makeNewTrip(currentUser).totalPrice
-    }`;
+    const newDestination = findDestination(destinationInput.value);
+
+    if (newDestination) {
+      inputErrorDisplay.hidden = false;
+      inputErrorDisplay.innerText = `Estimated Cost: $${
+        makeNewTrip(currentUser, newDestination).totalPrice
+      }`;
+    }
   }
 });
 
@@ -210,12 +217,14 @@ newTripBtn.addEventListener("click", () => {
   event?.preventDefault();
 
   if (checkIfInputsAreValid()) {
-    const new_trip = makeNewTrip(currentUser);
+    const newDestination = findDestination(destinationInput.value);
 
-    postNewTrip(new_trip).then(() => {
-      if (new_trip) currentUser.trips?.push(new_trip);
+    if (newDestination) {
+      const newTrip = makeNewTrip(currentUser, newDestination);
+
+      currentUser.trips?.push(newTrip);
       updateDOMAfterInput();
-    });
+    }
   } else {
     inputErrorDisplay.hidden = false;
     inputErrorDisplay.innerText = "Please fill out all the inputs";
@@ -223,7 +232,6 @@ newTripBtn.addEventListener("click", () => {
 });
 
 //Login Button Listener
-
 logInBtn.addEventListener("click", () => {
   const userNameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
 
@@ -235,11 +243,11 @@ logInBtn.addEventListener("click", () => {
     closeModals();
     logInError.hidden = true;
 
-    const userId = Number(usernameInput.value.slice(-1));
-    const user_trips = findUsersTrips(trips, userId);
+    const userId = Number(usernameInput.value.replace(/\D/g, ""));
+    const userTrips = findUsersTrips(trips, userId);
     const traveler = travelers.find((user) => user.id == userId);
 
-    if (traveler) currentUser = new User(traveler, user_trips);
+    if (traveler) currentUser = new User(traveler, userTrips);
 
     updateDOMForUser(currentUser);
   } else {

@@ -17,27 +17,28 @@ const newTripInputs = [
   ...document.querySelectorAll("new-trip-input"),
 ] as HTMLInputElement[];
 
-export const makeNewTrip = (currentUser: UserType): TripType => {
-  const dest_ID = Number(destinationInput?.value) || 0;
-
-  let newDestination = destinations.find(
-    (dest: DestinationType) => dest.id === dest_ID
+export const makeNewTrip = (
+  currentUser: UserType,
+  newDestination: DestinationType
+): TripType => {
+  console.log("inside NewTripInputs");
+  console.log(newDestination);
+  let newTrip = new Trip(
+    {
+      id: Date.now(),
+      userID: currentUser.id,
+      destinationID: newDestination.id,
+      duration: dayjs(endDateInput.value).diff(
+        dayjs(startDateInput.value),
+        "days"
+      ),
+      travelers: Number(numTravelersInput.value),
+      status: "pending",
+      suggestedActivities: [],
+      date: dayjs(startDateInput.value).format("MM-DD-YYYY"),
+    },
+    newDestination
   );
-
-  let newTrip = new Trip({
-    id: Date.now(),
-    userID: currentUser.id,
-    destinationID: dest_ID,
-    duration: dayjs(endDateInput.value).diff(
-      dayjs(startDateInput.value),
-      "days"
-    ),
-    travelers: Number(numTravelersInput.value),
-    status: "pending",
-    suggestedActivities: [],
-    date: dayjs(startDateInput.value).format("MM-DD-YYYY"),
-    destination: newDestination,
-  });
 
   return newTrip;
 };
@@ -56,6 +57,13 @@ export const findUsersTrips = (data: TripType[], userID?: number) => {
   });
 };
 
+export const findDestination = (
+  location: string
+): DestinationType | undefined => {
+  return destinations.find(
+    (dest: DestinationType) => dest.location === location
+  );
+};
 export const checkIfInputsAreValid = () => {
   const dateRegEx =
     /^(20[0-3][0-9]|2040)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
