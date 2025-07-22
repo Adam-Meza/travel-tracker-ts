@@ -19,7 +19,7 @@ class Trip {
     tripObj: TripType,
     destination = {
       id: 0,
-      destination: "", // CHANGE THIS TO LOCATION
+      location: "",
       estimatedLodgingCostPerDay: 0,
       estimatedFlightCostPerPerson: 0,
       image: "",
@@ -48,7 +48,7 @@ class Trip {
       this.destination.estimatedFlightCostPerPerson * this.travelers;
 
     const total = (totalLogdging + flightCost) * 1.1;
-    return total;
+    return Number(total.toFixed(2));
   }
 
   getEndDate() {
