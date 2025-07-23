@@ -6,7 +6,7 @@ header.main-header {
   align-items: center;
   justify-content: space-between;
   width: 90%;
-  height: 15vh;
+  height: 10vh;
   border-bottom: $grey-border;
   color: $red;
 }
@@ -37,4 +37,10 @@ header.main-header {
   @include btn-styling;
   @include white-red;
   margin: 0px 10px;
+}
+
+@media screen and (max-width: 550px) {
+  header.main-header > .nav-btn-box :nth-child(2) {
+    display: none;
+  }
 }

@@ -263,7 +263,10 @@ accountBtn.addEventListener("click", () => {
 //Other Event Listeners
 
 cardBox.addEventListener("click", () => {
-  if (event?.target?.classList.contains("js-view-details")) {
+  if (
+    event?.target instanceof Element &&
+    event?.target?.classList.contains("js-view-details")
+  ) {
     homeBtn.hidden = false;
     handleNavigation("trip details");
     displayTripDetailsInfo(getTripDetails(currentUser));

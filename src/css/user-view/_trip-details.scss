@@ -3,17 +3,18 @@
 
 .trip-details-view {
   @include flex-column;
-  align-items: flex-start;
+  justify-content: flex-end;
   border: $grey-border;
   background-color: white;
   color: black;
-  padding: 0px 40px;
-  padding: 0px;
-  justify-content: space-evenly;
+  padding: 2%;
+  justify-content: space-between;
+  width: 800px;
+  height: fit-content;
 
   .trip-view-img {
-    height: 40vh;
-    width: 800px;
+    height: 60%;
+    width: 100%;
     background-size: cover;
     background-position-x: center;
     background-position-y: center;
@@ -23,6 +24,7 @@
     @include flex-row;
     justify-content: space-evenly;
     width: 100%;
+    max-height: 40%;
 
     li {
       list-style-type: none;
@@ -33,24 +35,47 @@
   .trip-details {
     @include flex-column;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 0px;
     margin: 0px;
     width: 40%;
-    height: 300px;
   }
 
   .event-details {
     @include flex-column;
     justify-content: center;
-    width: 400px;
+    width: 60%;
+    aspect-ratio: 1;
 
     h3 {
       background-color: rgb(207, 207, 207);
       color: grey;
-      padding: 25%;
+      padding: 15%;
       text-align: center;
       text-indent: center;
+      margin: 0px;
     }
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .trip-details-view {
+    width: 90%;
+    height: 70vh;
+    max-height: 1000px;
+
+    .details-wrapper > * {
+      width: 100%;
+    }
+
+    .event-details {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .trip-details-view.trip-view-img {
+    width: 60vw;
   }
 }

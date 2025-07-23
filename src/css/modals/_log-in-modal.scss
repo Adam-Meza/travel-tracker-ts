@@ -3,14 +3,18 @@
 
 .login-modal {
   @include flex-row;
-  width: fit-content;
-
-  .log-in-wrapper {
-    width: 50%;
-  }
+  justify-content: center;
+  width: 600px;
 
   h2 {
     border-bottom: 1px solid $red;
+  }
+
+  .log-in-wrapper {
+    width: 40%;
+  }
+  .log-in-wrapper:nth-of-type(2) {
+    width: 60%;
   }
 }
 
@@ -19,9 +23,10 @@
   border-left: $grey-border;
   height: 80%;
   margin: 10%;
+  margin-left: 0px;
 
   p {
-    margin-left: 15px;
+    margin-left: 30px;
   }
 }
 
