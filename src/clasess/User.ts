@@ -1,21 +1,23 @@
 import dayjs from "dayjs";
-import type { UserType, TripType } from "../types";
+import type { UserTypePrimative, TripType } from "../types";
 
-class User implements UserType {
+class User {
   id: number;
   name: string;
   trips: TripType[];
-  travelerType?: string;
+  travelerType: string;
+  totalSpent?: number;
 
-  constructor(travelerObj: UserType, trips: TripType[]) {
+  constructor(travelerObj: UserTypePrimative, trips: TripType[]) {
     this.id = travelerObj.id;
     this.name = travelerObj.name;
+    this.totalSpent = 0;
     this.travelerType = travelerObj.travelerType;
     this.trips = this.formatTripData(trips);
   }
 
-  totalSpentOnTrips(): number {
-    return this.trips?.reduce((acc, trip) => acc + trip.totalPrice, 0) ?? 0;
+  totalSpentOnTrips(trips: TripType[]): number {
+    return trips.reduce((acc, trip) => (acc += trip.totalPrice), 0);
   }
 
   formatTripData(trips: TripType[]) {

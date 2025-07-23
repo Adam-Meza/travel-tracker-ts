@@ -1,6 +1,6 @@
-import type { UserType } from "../../src/types";
+import type { UserTypePrimative } from "../../src/types";
 
-const travelers: UserType[] = [
+const travelers: UserTypePrimative[] = [
   {
     id: 1,
     name: "Ham Leadbeater",

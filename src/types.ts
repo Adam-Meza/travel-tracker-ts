@@ -24,11 +24,15 @@ export type DestinationType = {
   alt: string;
 };
 
-export type UserType = {
+export type UserTypePrimative = {
   id: number;
   name: string;
-  travelerType?: string;
-  trips?: TripType[];
+  travelerType: string;
+};
+
+export type UserType = UserTypePrimative & {
+  trips: TripType[];
+  totalSpentOnTrips: (trips: TripType[]) => number;
 };
 
 export type ViewType = "user" | "agent" | "trip details" | "log out";
