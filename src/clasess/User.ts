@@ -6,12 +6,10 @@ class User {
   name: string;
   trips: TripType[];
   travelerType: string;
-  totalSpent?: number;
 
   constructor(travelerObj: UserTypePrimative, trips: TripType[]) {
     this.id = travelerObj.id;
     this.name = travelerObj.name;
-    this.totalSpent = 0;
     this.travelerType = travelerObj.travelerType;
     this.trips = this.formatTripData(trips);
   }

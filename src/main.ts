@@ -5,13 +5,7 @@ import { displayTripCards } from "./cards";
 import { destinations } from "../test/test-data/destination-test-data.ts";
 import { trips } from "../test/test-data/trips-test-data.ts";
 import { travelers } from "../test/test-data/user-test-data.ts";
-import type {
-  TripType,
-  DestinationType,
-  UserType,
-  UserTypePrimative,
-  ViewType,
-} from "./types.ts";
+import type { TripType, DestinationType, UserType, ViewType } from "./types.ts";
 import {
   makeNewTrip,
   findUsersTrips,
