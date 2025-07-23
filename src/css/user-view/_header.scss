@@ -6,9 +6,15 @@ header.main-header {
   align-items: center;
   justify-content: space-between;
   width: 90%;
-  height: 10vh;
+  min-height: 10vh;
   border-bottom: $grey-border;
   color: $red;
+
+  @media screen and (max-width: 550px) {
+    .nav-btn:nth-of-type(2) {
+      display: none;
+    }
+  }
 }
 
 .page-title {
@@ -37,10 +43,4 @@ header.main-header {
   @include btn-styling;
   @include white-red;
   margin: 0px 10px;
-}
-
-@media screen and (max-width: 550px) {
-  header.main-header > .nav-btn-box :nth-child(2) {
-    display: none;
-  }
 }

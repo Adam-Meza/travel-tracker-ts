@@ -8,6 +8,21 @@
   overflow: visible;
   flex-wrap: wrap;
   width: 90%;
+
+  .trip-card:nth-of-type(n + 4) {
+    margin-top: 20px;
+  }
+
+  @media screen and (max-width: 1333px) {
+    .trip-card:nth-of-type(n + 3) {
+      margin-top: 20px;
+    }
+  }
+  @media screen and (max-width: 888px) {
+    .trip-card:nth-of-type(n + 2) {
+      margin-top: 20px;
+    }
+  }
 }
 
 .trip-card {
@@ -20,6 +35,7 @@
   border-radius: 30px;
   overflow: hidden;
   padding-bottom: 20px;
+  background: radial-gradient(white, rgb(240, 242, 243));
 
   .trip-img {
     width: 100%;
