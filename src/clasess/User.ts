@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import type { UserType, TripType } from "../types";
 
-class User {
+class User implements UserType {
   id: number;
   name: string;
   trips: TripType[];
@@ -14,13 +14,8 @@ class User {
     this.trips = this.formatTripData(trips);
   }
 
-  totalSpentOnTrips() {
-    return !this.trips
-      ? "Trips Data is undefined"
-      : this.trips.reduce((acc, currentTrip) => {
-          //@ts-ignore
-          return (acc += currentTrip?.totalPrice);
-        }, 0);
+  totalSpentOnTrips(): number {
+    return this.trips?.reduce((acc, trip) => acc + trip.totalPrice, 0) ?? 0;
   }
 
   formatTripData(trips: TripType[]) {

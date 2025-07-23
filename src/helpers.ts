@@ -1,4 +1,9 @@
-import type { DestinationType, TripType, UserType } from "./types";
+import type {
+  DestinationType,
+  TripType,
+  TripTypePrimative,
+  UserType,
+} from "./types";
 import Trip from "./clasess/trip";
 import { destinations } from "../test/test-data/destination-test-data.ts";
 import dayjs from "dayjs";
@@ -43,18 +48,19 @@ export const makeNewTrip = (
   return newTrip;
 };
 
-export const findUsersTrips = (data: TripType[], userID?: number) => {
-  userID
-    ? (data = data.filter((trip: TripType) => trip.userID === userID))
-    : null;
+export const findUsersTrips = (
+  data: TripTypePrimative[],
+  userID: number
+): TripType[] => {
+  return data
+    .filter((trip: TripTypePrimative) => trip.userID === userID)
+    .map((trip) => {
+      const destination = destinations.find(
+        (dest: DestinationType) => dest.id === trip.destinationID
+      );
 
-  return data.map((trip) => {
-    let destination = destinations.find(
-      (dest: DestinationType) => dest.id === trip.destinationID
-    );
-
-    return new Trip(trip, destination);
-  });
+      return new Trip(trip, destination as DestinationType);
+    });
 };
 
 export const findDestination = (
@@ -81,10 +87,11 @@ export const checkIfInputsAreValid = () => {
 };
 
 export const getTripDetails = (currentUser: UserType): TripType | undefined => {
-  return currentUser.trips?.find(
-    //@ts-ignore
-    (trip: TripType) => trip.id === Number(event?.target?.id)
-  );
+  if (event?.target instanceof Element) {
+    const targetId = Number(event.target.id);
+
+    return currentUser.trips?.find((trip: TripType) => trip.id === targetId);
+  }
 };
 
 export const resetData = (dataWanted: "trip" | "account") => {

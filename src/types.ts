@@ -1,4 +1,4 @@
-export type TripType = {
+export type TripTypePrimative = {
   id: number;
   userID: number;
   destinationID: number;
@@ -6,10 +6,13 @@ export type TripType = {
   travelers: number;
   status: string;
   date: string;
-  suggestedActivities?: string[];
-  destination?: DestinationType;
-  totalPrice?: number;
-  endDate?: string;
+  suggestedActivities: string[];
+};
+
+export type TripType = TripTypePrimative & {
+  destination: DestinationType;
+  totalPrice: number;
+  endDate: string;
 };
 
 export type DestinationType = {

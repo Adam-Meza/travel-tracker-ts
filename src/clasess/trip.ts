@@ -1,21 +1,21 @@
 import dayjs from "dayjs";
-import type { DestinationType, TripType } from "../types";
+import type { DestinationType, TripType, TripTypePrimative } from "../types";
 
-class Trip {
+class Trip implements TripType {
   id: number;
   userID: number;
   destinationID: number;
   date: string;
   duration: number;
   status: string;
-  suggestedActivities?: string[];
+  suggestedActivities: string[];
   travelers: number;
   destination: DestinationType;
   image: string;
   endDate: string;
   totalPrice: number;
 
-  constructor(tripObj: TripType, destination: DestinationType) {
+  constructor(tripObj: TripTypePrimative, destination: DestinationType) {
     this.id = tripObj.id;
     this.userID = tripObj.userID;
     this.destinationID = tripObj.destinationID;
