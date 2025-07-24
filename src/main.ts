@@ -103,7 +103,6 @@ logInBtn.addEventListener("click", () => {
 
       if (traveler) {
         currentUser = new User(traveler, userTrips);
-        console.log(userTrips[0]);
         updateDOMForLogin(currentUser);
       }
     }

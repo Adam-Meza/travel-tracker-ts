@@ -4,7 +4,6 @@ import type {
   DestinationType,
   TripType,
   UserTypePrimative,
-  PriceEstimateType,
 } from "../scripts/types";
 dayjs.extend(isBetween);
 
@@ -65,26 +64,6 @@ export class Agent {
       acc[id].push(currentTrip);
       return acc;
     }, {} as Record<number, TripType[]>);
-  }
-
-  getUsersCurrentlyTraveling() {
-    // return this.trips
-    //   .filter((trip) =>
-    //     dayjs().isBetween(
-    //       dayjs(trip.date),
-    //       dayjs(trip.endDate),
-    //       null,
-    //       "[inclusive]",
-    //       "day"
-    //     )
-    //   )
-    //   .reduce((acc, currentTrip) => {
-    //     const userName =
-    //       this.users.find((user) => currentTrip.userID === user.id)?.name || "";
-    //     !acc.find((user) => user.name === userName) ? acc.push(userName) : null;
-    //     return acc;
-    //   }, [])
-    //   .join(", ");
   }
 }
 
