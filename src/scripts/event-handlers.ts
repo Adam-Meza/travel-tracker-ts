@@ -9,9 +9,9 @@ import {
   destinationInput,
   numTravelersInput,
 } from "./queries";
-import Trip from "./clasess/Trip";
+import Trip from "../clasess/Trip";
 import { updateDOMAfterInput } from "./DOMManipulators";
-import { PriceEstimate } from "./clasess/PriceEstimate";
+import { PriceEstimate } from "../clasess/PriceEstimate";
 
 export const postPriceEstimate = () => {
   if (checkIfInputsAreValid(startDateInput.value, endDateInput.value)) {
@@ -55,12 +55,30 @@ export const handlePostingNewTrip = (currentUser: UserType) => {
         newDestination
       );
 
-      //@ts-ignore
-      currentUser.trips?.push(newTrip);
+      currentUser.trips.push(newTrip);
       updateDOMAfterInput(currentUser);
     }
   } else {
     inputErrorDisplay.hidden = false;
     inputErrorDisplay.innerText = "Please fill out all the inputs";
   }
+};
+
+export const setAgentUser = (data, charts) => {
+  destinations = data[2].destinations;
+  currentUser = new Agent(
+    data[0].travelers,
+    makeTripArray(data[1].trips),
+    data[2].destinations
+  );
+
+  requestsCardsBox.innerHTML = "";
+  displayRequestCards(
+    currentUser.tripsData.filter((trip) => trip.status === "pending"),
+    currentUser
+  );
+  displayFinanceData();
+  charts
+    ? displayYearlyProfitChart(yearlyProfitChart, dataForYearlyChart())
+    : null;
 };

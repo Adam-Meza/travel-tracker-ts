@@ -1,13 +1,11 @@
 import dayjs from "dayjs";
 import type { TripType } from "./types";
+import { cardBox } from "./queries";
 
-const cardBox = document.getElementById("js-card-box") as HTMLElement;
-
-const displayTripCards = (trips: TripType[] | undefined) => {
-  cardBox.hidden = false;
+export const displayTripCards = (trips: TripType[]) => {
   cardBox.innerHTML = "";
 
-  trips?.forEach((trip) => {
+  trips.forEach((trip) => {
     cardBox.innerHTML += `
       <div class="trip-card js-trip-card" tabindex="0">
         <img class="trip-img js-trip-img" src="${
@@ -26,5 +24,3 @@ const displayTripCards = (trips: TripType[] | undefined) => {
       </div> `;
   });
 };
-
-export { displayTripCards };

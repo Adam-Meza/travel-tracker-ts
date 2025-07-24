@@ -1,10 +1,5 @@
 import dayjs from "dayjs";
-import type {
-  DestinationType,
-  TripType,
-  PriceEstimateType,
-  TripTypePrimative,
-} from "../types";
+import type { DestinationType, TripTypePrimative } from "../scripts/types";
 
 import { PriceEstimate } from "./PriceEstimate";
 

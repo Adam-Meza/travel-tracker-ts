@@ -1,4 +1,4 @@
-import type { DestinationType } from "../../src/types";
+import type { DestinationType } from "../../src/scripts/types";
 
 const destinations: DestinationType[] = [
   {

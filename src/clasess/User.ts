@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { UserTypePrimative, TripType } from "../types";
+import type { UserTypePrimative, TripType } from "../scripts/types";
 
 class User {
   id: number;

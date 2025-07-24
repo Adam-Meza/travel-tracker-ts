@@ -3,9 +3,9 @@ import type {
   TripType,
   TripTypePrimative,
   UserType,
-} from "./types";
-import Trip from "./clasess/Trip.ts";
-import { destinations } from "../test/test-data/destination-test-data.ts";
+} from "./types.ts";
+import Trip from "../clasess/Trip.ts";
+import { destinations } from "../../test/test-data/destination-test-data.ts";
 import {
   numTravelersInput,
   destinationInput,

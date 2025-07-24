@@ -1,4 +1,4 @@
-import type { UserTypePrimative } from "../../src/types";
+import type { UserTypePrimative } from "../../src/scripts/types";
 
 const travelers: UserTypePrimative[] = [
   {

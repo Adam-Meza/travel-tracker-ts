@@ -1,4 +1,4 @@
-import type { TripTypePrimative } from "../../src/types";
+import type { TripTypePrimative } from "../../src/scripts/types";
 
 const trips: TripTypePrimative[] = [
   {

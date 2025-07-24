@@ -2,8 +2,15 @@ import "./css/styles.scss";
 import User from "./clasess/User.ts";
 import { travelers } from "../test/test-data/user-test-data.ts";
 import { trips } from "../test/test-data/trips-test-data.ts";
-import { getTripDetails, resetData, findUsersTrips } from "./helpers.ts";
-import { postPriceEstimate, handlePostingNewTrip } from "./event-handlers.ts";
+import {
+  getTripDetails,
+  resetData,
+  findUsersTrips,
+} from "./scripts/helpers.ts";
+import {
+  postPriceEstimate,
+  handlePostingNewTrip,
+} from "./scripts/event-handlers.ts";
 import {
   handleNavigation,
   updateDOMForLogin,
@@ -12,7 +19,7 @@ import {
   displayRandomDestination,
   resetDetails,
   displayLogInError,
-} from "./DOMManipulators.ts";
+} from "./scripts/DOMManipulators.ts";
 
 import {
   startDateInput,
@@ -32,8 +39,9 @@ import {
   logInBtn,
   logOutBtn,
   overlay,
-} from "./queries.ts";
-import type { UserType } from "./types.ts";
+} from "./scripts/queries.ts";
+import type { UserType } from "./scripts/types.ts";
+import dayjs from "dayjs";
 
 // Global Variable
 let currentUser: UserType;
@@ -61,6 +69,9 @@ newTripBtn.addEventListener("click", () => {
   event?.preventDefault();
   handlePostingNewTrip(currentUser);
 });
+
+endDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
+startDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
 
 //Login Button Listener
 logInBtn.addEventListener("click", () => {
@@ -97,14 +108,16 @@ cardBox.addEventListener("click", () => {
   ) {
     homeBtn.hidden = false;
     handleNavigation("trip details");
-    displayTripDetailsInfo(getTripDetails(currentUser));
+
+    const trips = getTripDetails(currentUser);
+    if (trips) displayTripDetailsInfo(trips);
   }
 });
 
 homeBtn.addEventListener("click", () => {
   resetDetails(resetData("trip"), tripDetails);
   displayRandomDestination();
-  handleNavigation("user");
+  handleNavigation("user", currentUser);
 });
 
 modalCloseBtns.forEach((btn) =>

@@ -97,9 +97,6 @@ export const modalCloseBtns = [
   ...document.querySelectorAll(".close-modal-btn"),
 ] as HTMLButtonElement[];
 
-endDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
-startDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
-
 // Advertisment
 export const adBackground = document.getElementById(
   "js-ad-background"

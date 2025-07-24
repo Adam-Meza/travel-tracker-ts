@@ -1,6 +1,5 @@
 import type { TripType, DestinationType, ViewType, UserType } from "./types";
-
-import User from "./clasess/User";
+import { destinations } from "../../test/test-data/destination-test-data";
 import { displayTripCards } from "./cards";
 import {
   inputErrorDisplay,
@@ -20,15 +19,9 @@ import {
   overlay,
   accountInfoInputs,
   logInModal,
-  usernameInput,
   tripDetails,
   mainTitle,
 } from "./queries";
-
-import { destinations } from "../test/test-data/destination-test-data";
-import { travelers } from "../test/test-data/user-test-data";
-import { findUsersTrips } from "./helpers";
-import { trips } from "../test/test-data/trips-test-data";
 
 export const updateDOMAfterInput = (currentUser: UserType) => {
   displayTripCards(currentUser.trips);
@@ -36,7 +29,6 @@ export const updateDOMAfterInput = (currentUser: UserType) => {
   clearAllInputs();
 };
 
-// DOM functions
 const clearAllInputs = () => {
   allInputs.forEach((input) => (input.value = ""));
 };
@@ -48,13 +40,17 @@ const hideDOM = () => {
   tripDetailsView.hidden = true;
 };
 
-export const handleNavigation = (viewToShow: ViewType) => {
+export const handleNavigation = (
+  viewToShow: ViewType,
+  currentUser?: UserType
+) => {
   clearAllInputs();
   hideDOM();
 
   // Un-hide each element based on the views
   switch (viewToShow) {
     case "user": {
+      mainTitle.innerText = `${currentUser?.name.split(" ")[0]}'s Trips`;
       mainBox.hidden = false;
       adBackground.hidden = false;
       cardBox.hidden = false;
@@ -86,7 +82,7 @@ export const resetDetails = (data: string[], elements: HTMLElement[]) => {
   });
 };
 
-export const populateDestinationList = (destinations: DestinationType[]) => {
+const populateDestinationList = (destinations: DestinationType[]) => {
   destinations.forEach((destination: DestinationType) => {
     destinationList.innerHTML += `<option value='${destination.location}'>`;
   });
@@ -101,7 +97,7 @@ export const displayRandomDestination = () => {
   adPrice.innerHTML = `$${ranDest.estimatedLodgingCostPerDay}/<span class="per-night">per night</span>`;
 };
 
-export const populateAccountModal = (user: UserType) => {
+const populateAccountModal = (user: UserType) => {
   const accountInfoInputsData = [
     user.name,
     user.travelerType,
@@ -114,9 +110,7 @@ export const populateAccountModal = (user: UserType) => {
   });
 };
 
-export const displayTripDetailsInfo = (trip: TripType | undefined) => {
-  if (!trip) return;
-
+export const displayTripDetailsInfo = (trip: TripType) => {
   const tripDetailsData = [
     trip.destination?.location,
     trip.date,
@@ -134,9 +128,7 @@ export const displayTripDetailsInfo = (trip: TripType | undefined) => {
 
 export const updateDOMForLogin = (currentUser: UserType) => {
   closeModals();
-
-  mainTitle.innerText = `${currentUser.name.split(" ")[0]}'s Trips`;
-  handleNavigation("user");
+  handleNavigation("user", currentUser);
   populateAccountModal(currentUser);
   displayTripCards(currentUser.trips);
   populateDestinationList(destinations);

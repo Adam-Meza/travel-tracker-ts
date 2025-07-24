@@ -3,7 +3,7 @@ import type {
   DestinationType,
   PriceEstimateType,
   TripTypePrimative,
-} from "../types";
+} from "../scripts/types";
 dayjs;
 
 export class PriceEstimate {
