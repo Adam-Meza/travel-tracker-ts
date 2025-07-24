@@ -1,0 +1,35 @@
+@import "../variables";
+@import "../mixins";
+
+.agent-box {
+  @include flex-column;
+  align-items: flex-start;
+  height: 90%;
+  border: $grey-border;
+  color: black;
+  padding: 0px 40px;
+}
+
+.agent-view-header {
+  @include flex-row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: $grey-border;
+}
+
+.agent-nav-btn {
+  @include btn-styling;
+}
+
+.request-view-box {
+  margin: 20px;
+  width: 100%;
+  height: 100%;
+
+  input {
+    width: 90%;
+    height: 30px;
+    text-indent: 15px;
+  }
+}

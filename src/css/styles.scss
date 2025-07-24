@@ -9,7 +9,8 @@
 @use "./modals/modal";
 @use "./modals/log-in-modal";
 @use "./modals/account-modal";
-
+@use "./agent-view/agent-mode";
+@use "./agent-view/requests";
 * {
   font-family: "Open Sans", sans-serif;
 

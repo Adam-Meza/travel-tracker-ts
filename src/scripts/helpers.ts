@@ -14,18 +14,19 @@ import {
 
 export const findUsersTrips = (
   data: TripTypePrimative[],
-  userID: number
+  userID?: number
 ): TripType[] => {
-  //@ts-ignore
-  return data
-    .filter((trip: TripTypePrimative) => trip.userID === userID)
-    .map((trip) => {
-      const destination = destinations.find(
-        (dest: DestinationType) => dest.id === trip.destinationID
-      );
+  const trips = userID
+    ? data.filter((trip: TripTypePrimative) => trip.userID === userID)
+    : data;
 
-      return new Trip(trip, destination as DestinationType);
-    });
+  return trips.map((trip) => {
+    const destination = destinations.find(
+      (dest: DestinationType) => dest.id === trip.destinationID
+    );
+
+    return new Trip(trip, destination as DestinationType);
+  });
 };
 
 export const findDestination = (

@@ -105,3 +105,39 @@ export const adDestination = document.getElementById(
   "js-ad-destination"
 ) as HTMLElement;
 export const adPrice = document.getElementById("js-ad-price") as HTMLElement;
+
+// Agent Mode
+
+export const agentViewContainer = document.getElementById(
+  "js-agent-container"
+) as HTMLElement;
+export const agentTitle = document.getElementById(
+  "js-agent-title"
+) as HTMLElement;
+export const yearlyProfitChart = document.getElementById(
+  "js-yearly-profit-chart"
+) as HTMLCanvasElement;
+export const financesBox = document.getElementById(
+  "js-finances-box"
+) as HTMLElement;
+export const financesBtn = document.getElementById(
+  "js-finances-btn"
+) as HTMLButtonElement;
+export const requestsBox = document.getElementById(
+  "js-request-box"
+) as HTMLElement;
+export const requestsCardsBox = document.getElementById(
+  "js-requests-cards-box"
+) as HTMLElement;
+export const searchUsersInput = document.getElementById(
+  "js-agent-serach-input"
+) as HTMLElement;
+export const requestBtn = document.getElementById(
+  "js-request-btn"
+) as HTMLButtonElement;
+export const agentNavBtns = [
+  ...document.querySelectorAll(".agent-nav-btn"),
+] as HTMLButtonElement[];
+export const financesDataPoints = [
+  ...document.querySelectorAll(".js-finances-data"),
+] as HTMLElement[];

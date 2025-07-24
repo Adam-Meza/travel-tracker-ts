@@ -29,7 +29,7 @@ export class PriceEstimate {
 
   calculatePrice() {
     const totalLogdging =
-      this.duration || 0 * this.destination.estimatedLodgingCostPerDay;
+      this.duration * this.destination.estimatedLodgingCostPerDay;
 
     const flightCost =
       this.destination.estimatedFlightCostPerPerson * this.travelers;

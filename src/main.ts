@@ -1,7 +1,9 @@
 import "./css/styles.scss";
+import Agent from "./clasess/Agent.ts";
 import User from "./clasess/User.ts";
 import { travelers } from "../test/test-data/user-test-data.ts";
 import { trips } from "../test/test-data/trips-test-data.ts";
+import { destinations } from "../test/test-data/destination-test-data.ts";
 import {
   getTripDetails,
   resetData,
@@ -10,7 +12,9 @@ import {
 import {
   postPriceEstimate,
   handlePostingNewTrip,
+  updateDOMForAgent,
 } from "./scripts/event-handlers.ts";
+
 import {
   handleNavigation,
   updateDOMForLogin,
@@ -19,6 +23,7 @@ import {
   displayRandomDestination,
   resetDetails,
   displayLogInError,
+  handleAgentNav,
 } from "./scripts/DOMManipulators.ts";
 
 import {
@@ -39,16 +44,19 @@ import {
   logInBtn,
   logOutBtn,
   overlay,
+  agentNavBtns,
+  requestsBox,
+  searchUsersInput,
 } from "./scripts/queries.ts";
 import type { UserType } from "./scripts/types.ts";
 import dayjs from "dayjs";
 
 // Global Variable
 let currentUser: UserType;
+let agent: Agent;
 
 // Event Listeners
 // New Trip Inputs/Button Event Listeners
-
 startDateInput.addEventListener("change", () => {
   endDateInput.disabled = false;
   endDateInput.setAttribute("min", startDateInput.value);
@@ -75,19 +83,29 @@ startDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
 
 //Login Button Listener
 logInBtn.addEventListener("click", () => {
-  const userNameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
+  const usernameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
+  const username = usernameInput.value;
+
   if (
-    usernameInput.value &&
-    userNameRegEx.test(usernameInput.value) &&
+    username &&
+    usernameRegEx.test(username) &&
     passwordInput.value === "travel"
   ) {
-    const userId = Number(usernameInput.value.replace(/\D/g, ""));
-    const userTrips = findUsersTrips(trips, userId);
-    const traveler = travelers.find((user) => user.id == userId);
+    if (username === "agent") {
+      agent = new Agent(travelers, findUsersTrips(trips), destinations);
 
-    if (traveler) {
-      currentUser = new User(traveler, userTrips);
-      updateDOMForLogin(currentUser);
+      handleNavigation("agent");
+      updateDOMForAgent(agent);
+    } else {
+      const userId = Number(username.replace(/\D/g, ""));
+      const userTrips = findUsersTrips(trips, userId);
+      const traveler = travelers.find((user) => user.id == userId);
+
+      if (traveler) {
+        currentUser = new User(traveler, userTrips);
+        console.log(userTrips[0]);
+        updateDOMForLogin(currentUser);
+      }
     }
   } else {
     displayLogInError();
@@ -130,3 +148,45 @@ logOutBtn.addEventListener("click", () => {
   resetDetails(resetData("account"), accountInfoInputs);
   handleNavigation("log out");
 });
+
+// Agent Mode Event Listeners
+
+requestsBox.addEventListener("click", (event) => {
+  if (event?.target instanceof Element) {
+    if (event.target.classList.contains("approved")) {
+      // updateTrip(
+      //   currentUser.tripsData.find(
+      //     (trip) => trip.id === Number(event.target.parentNode.id)
+      //   ),
+      //   `${event.target.classList}`
+      // )
+      // handleNavigation("agent");
+      // setAgentUser(data, false);
+    } else if (event.target.classList.contains("denied")) {
+      // handleNavigation("agent");
+      // setAgentUser(data, false);
+    }
+  }
+});
+
+searchUsersInput.addEventListener("input", () => {
+  // requestsCardsBox.innerHTML = "";
+  // if (searchUsersInput.value) {
+  //   displayRequestCards(filterByStatus(searchByName(), "pending"), currentUser);
+  //   displayUserCards(filterByStatus(searchByName(), "approved"), currentUser);
+  // } else {
+  //   displayRequestCards(
+  //     currentUser.tripsData.filter((trip) => trip.status === "pending"),
+  //     currentUser
+  //   );
+  // }
+});
+
+accountBtn.addEventListener("click", () => {
+  accountModal.classList.add("active");
+  overlay.classList.add("active-overlay");
+});
+
+agentNavBtns.forEach((btn) =>
+  btn.addEventListener("click", () => handleAgentNav("test"))
+);

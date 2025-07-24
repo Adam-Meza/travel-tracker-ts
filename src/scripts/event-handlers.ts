@@ -10,8 +10,15 @@ import {
   numTravelersInput,
 } from "./queries";
 import Trip from "../clasess/Trip";
-import { updateDOMAfterInput } from "./DOMManipulators";
+import {
+  updateDOMAfterInput,
+  displayFinanceData,
+  closeModals,
+} from "./DOMManipulators";
 import { PriceEstimate } from "../clasess/PriceEstimate";
+import type Agent from "../clasess/Agent";
+import { displayRequestCards } from "./cards";
+import { displayYearlyProfitChart } from "./chart";
 
 export const postPriceEstimate = () => {
   if (checkIfInputsAreValid(startDateInput.value, endDateInput.value)) {
@@ -64,21 +71,14 @@ export const handlePostingNewTrip = (currentUser: UserType) => {
   }
 };
 
-export const setAgentUser = (data, charts) => {
-  destinations = data[2].destinations;
-  currentUser = new Agent(
-    data[0].travelers,
-    makeTripArray(data[1].trips),
-    data[2].destinations
-  );
-
-  requestsCardsBox.innerHTML = "";
+export const updateDOMForAgent = (agent: Agent, charts?: boolean) => {
+  closeModals();
   displayRequestCards(
-    currentUser.tripsData.filter((trip) => trip.status === "pending"),
-    currentUser
+    agent.trips.filter((trip) => trip.status === "pending"),
+    agent
   );
-  displayFinanceData();
-  charts
-    ? displayYearlyProfitChart(yearlyProfitChart, dataForYearlyChart())
-    : null;
+  console.log("updateDOmforagetn");
+  displayFinanceData(agent);
+
+  charts ? displayYearlyProfitChart(agent) : null;
 };

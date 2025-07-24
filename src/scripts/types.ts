@@ -43,3 +43,10 @@ export type PriceEstimateType = {
   endDate: string;
   travelers: number;
 };
+
+export type AgentType = {
+  name: string;
+  users: UserTypePrimative[];
+  trips: TripType[];
+  destinations: DestinationType[];
+};

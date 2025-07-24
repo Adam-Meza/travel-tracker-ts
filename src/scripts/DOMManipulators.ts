@@ -1,4 +1,10 @@
-import type { TripType, DestinationType, ViewType, UserType } from "./types";
+import type {
+  TripType,
+  DestinationType,
+  ViewType,
+  UserType,
+  AgentType,
+} from "./types";
 import { destinations } from "../../test/test-data/destination-test-data";
 import { displayTripCards } from "./cards";
 import {
@@ -21,7 +27,15 @@ import {
   logInModal,
   tripDetails,
   mainTitle,
+  financesBox,
+  financesBtn,
+  requestBtn,
+  requestsBox,
+  agentTitle,
+  financesDataPoints,
+  agentViewContainer,
 } from "./queries";
+import type Agent from "../clasess/Agent";
 
 export const updateDOMAfterInput = (currentUser: UserType) => {
   displayTripCards(currentUser.trips);
@@ -47,7 +61,6 @@ export const handleNavigation = (
   clearAllInputs();
   hideDOM();
 
-  // Un-hide each element based on the views
   switch (viewToShow) {
     case "user": {
       mainTitle.innerText = `${currentUser?.name.split(" ")[0]}'s Trips`;
@@ -60,6 +73,7 @@ export const handleNavigation = (
     case "agent": {
       homeBtn.hidden = false;
       mainBox.hidden = false;
+      agentViewContainer.hidden = false;
       mainTitle.innerText = "Agent Portal";
       break;
     }
@@ -144,4 +158,35 @@ export const closeModals = () => {
 export const displayLogInError = () => {
   logInError.hidden = false;
   logInError.innerText = "Enter A Valid User Name and Password";
+};
+
+export const handleAgentNav = (header: string) => {
+  financesBtn.toggleAttribute("hidden");
+  financesBox.toggleAttribute("hidden");
+  requestsBox.toggleAttribute("hidden");
+  requestBtn.toggleAttribute("hidden");
+  agentTitle.innerText = header;
+};
+
+export const displayFinanceData = (agent: Agent) => {
+  console.log(
+    agent.getTotalProfit(),
+    agent.getTotalForYear("2023"),
+    agent.getTotalForYear("2022"),
+    agent.getAverageProfit()
+  );
+  const totalFinanceData = [
+    agent.getTotalProfit(),
+    agent.getTotalForYear("2023"),
+    agent.getTotalForYear("2022"),
+    agent.getAverageProfit(),
+    agent.getTotalUserAverage(),
+    agent.getUsersCurrentlyTraveling(),
+  ];
+
+  console.log("we get here");
+
+  financesDataPoints.forEach(
+    (span, index) => (span.innerHTML = `${totalFinanceData[index]}`)
+  );
 };
