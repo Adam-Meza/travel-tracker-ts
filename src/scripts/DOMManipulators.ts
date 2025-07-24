@@ -171,17 +171,18 @@ export const handleAgentNav = (header: string) => {
 export const displayFinanceData = (agent: Agent) => {
   console.log(
     agent.getTotalProfit(),
-    agent.getTotalForYear("2023"),
-    agent.getTotalForYear("2022"),
-    agent.getAverageProfit()
+    agent.getTotalForYear(2023),
+    agent.getTotalForYear(2022),
+    agent.getAverageProfit(),
+    agent.getTotalUserAverage()
   );
   const totalFinanceData = [
     agent.getTotalProfit(),
-    agent.getTotalForYear("2023"),
-    agent.getTotalForYear("2022"),
+    agent.getTotalForYear(2023),
+    agent.getTotalForYear(2022),
     agent.getAverageProfit(),
     agent.getTotalUserAverage(),
-    agent.getUsersCurrentlyTraveling(),
+    // agent.getUsersCurrentlyTraveling(),
   ];
 
   console.log("we get here");

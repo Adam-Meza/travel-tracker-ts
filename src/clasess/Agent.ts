@@ -4,6 +4,7 @@ import type {
   DestinationType,
   TripType,
   UserTypePrimative,
+  PriceEstimateType,
 } from "../scripts/types";
 dayjs.extend(isBetween);
 
@@ -24,7 +25,7 @@ export class Agent {
     this.destinationsData = destinationsData;
   }
 
-  getTotalProfit(trips = this.trips) {
+  getTotalProfit(trips = this.trips as { totalPrice: number }[]) {
     return Math.floor(
       trips.reduce((acc, currentTrip) => {
         return (acc += currentTrip.totalPrice);
@@ -32,40 +33,38 @@ export class Agent {
     );
   }
 
-  getAverageProfit(trips = this.trips) {
+  getAverageProfit(trips = this.trips as { totalPrice: number }[]) {
     return Math.floor(this.getTotalProfit(trips) / trips.length);
   }
 
-  getTotalForYear(year: string) {
-    return /^20(1[89]|2[0-5])$/.test(year)
-      ? 0
-      : Math.floor(
-          this.getTotalProfit(
-            this.trips.filter(
-              (trip) => dayjs(trip.date).year() === Number(year)
-            )
-          )
-        );
+  getTotalForYear(year: number) {
+    if (year >= 2001 && year <= 2030) {
+      return Math.floor(
+        this.getTotalProfit(
+          this.trips.filter((trip) => dayjs(trip.date).year() === year)
+        )
+      );
+    }
   }
 
   getTotalUserAverage() {
     const usersObject = this.arrangeTripsByUserId();
+
     const totalPerUserArray = Object.keys(usersObject).map((key) => ({
-      totalPrice: this.getTotalProfit(usersObject[key]),
+      totalPrice: this.getTotalProfit(usersObject[Number(key)]),
     }));
-    return 3;
-    // return this.getAverageProfit(totalPerUserArray);
+    return this.getAverageProfit(totalPerUserArray);
   }
 
-  arrangeTripsByUserId(): Record<string, TripType[]> {
+  arrangeTripsByUserId(): Record<number, TripType[]> {
     return this.trips.reduce((acc, currentTrip: TripType) => {
-      const id = String(currentTrip.userID);
+      const id = currentTrip.userID;
 
-      if (acc[id]) acc[id] = [];
+      if (!acc[id]) acc[id] = [];
 
       acc[id].push(currentTrip);
       return acc;
-    }, {} as Record<string, TripType[]>);
+    }, {} as Record<number, TripType[]>);
   }
 
   getUsersCurrentlyTraveling() {

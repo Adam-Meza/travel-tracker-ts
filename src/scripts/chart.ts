@@ -3,15 +3,11 @@ import type Agent from "../clasess/Agent";
 import { yearlyProfitChart } from "./queries";
 
 export const displayYearlyProfitChart = (agent: Agent) => {
-  const formatData = () => {
-    const years = ["2019", "2020", "2021", "2022", "2023"];
-    return years.map((year) => ({
-      profit: agent.getTotalForYear(year),
-      year: year,
-    }));
-  };
-
-  const formatted = formatData();
+  const years = [2019, 2020, 2021, 2022, 2023];
+  const formatted = years.map((year) => ({
+    profit: agent.getTotalForYear(year),
+    year: year,
+  }));
 
   new Chart(yearlyProfitChart, {
     type: "line",
