@@ -23,7 +23,7 @@ class Trip extends PriceEstimate {
     this.userID = tripObj.userID;
     this.destinationID = tripObj.destinationID;
     this.date = tripObj.date;
-    this.duration = this.getDuration();
+    this.duration = tripObj.duration;
     this.status = tripObj.status;
     this.suggestedActivities = tripObj.suggestedActivities;
     this.travelers = tripObj.travelers;
