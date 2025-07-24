@@ -1,7 +1,14 @@
 import dayjs from "dayjs";
-import type { DestinationType, TripType, TripTypePrimative } from "../types";
+import type {
+  DestinationType,
+  TripType,
+  PriceEstimateType,
+  TripTypePrimative,
+} from "../types";
 
-class Trip implements TripType {
+import { PriceEstimate } from "./PriceEstimate";
+
+class Trip extends PriceEstimate {
   id: number;
   userID: number;
   destinationID: number;
@@ -16,11 +23,12 @@ class Trip implements TripType {
   totalPrice: number;
 
   constructor(tripObj: TripTypePrimative, destination: DestinationType) {
+    super(tripObj, destination);
     this.id = tripObj.id;
     this.userID = tripObj.userID;
     this.destinationID = tripObj.destinationID;
     this.date = tripObj.date;
-    this.duration = tripObj.duration;
+    this.duration = this.getDuration();
     this.status = tripObj.status;
     this.suggestedActivities = tripObj.suggestedActivities;
     this.travelers = tripObj.travelers;
@@ -28,21 +36,6 @@ class Trip implements TripType {
     this.image = destination.image;
     this.endDate = this.getEndDate();
     this.totalPrice = this.calculatePrice();
-  }
-
-  calculatePrice() {
-    const totalLogdging =
-      this.duration * this.destination.estimatedLodgingCostPerDay;
-
-    const flightCost =
-      this.destination.estimatedFlightCostPerPerson * this.travelers;
-
-    const total = (totalLogdging + flightCost) * 1.1;
-    return Number(total.toFixed(2));
-  }
-
-  getEndDate() {
-    return dayjs(this.date).add(this.duration, "days").format("MM/DD/YYYY");
   }
 }
 

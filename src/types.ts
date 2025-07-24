@@ -36,3 +36,10 @@ export type UserType = UserTypePrimative & {
 };
 
 export type ViewType = "user" | "agent" | "trip details" | "log out";
+
+export type PriceEstimateType = {
+  id: 0;
+  date: string;
+  endDate: string;
+  travelers: number;
+};

@@ -4,54 +4,19 @@ import type {
   TripTypePrimative,
   UserType,
 } from "./types";
-import Trip from "./clasess/trip";
+import Trip from "./clasess/Trip.ts";
 import { destinations } from "../test/test-data/destination-test-data.ts";
-import dayjs from "dayjs";
-
-const startDateInput = document.getElementById(
-  "js-start-date"
-) as HTMLInputElement;
-const endDateInput = document.getElementById("js-end-date") as HTMLInputElement;
-const numTravelersInput = document.getElementById(
-  "js-num-travelers-input"
-) as HTMLInputElement;
-const destinationInput = document.getElementById(
-  "js-destination-input"
-) as HTMLInputElement;
-const newTripInputs = [
-  ...document.querySelectorAll("new-trip-input"),
-] as HTMLInputElement[];
-
-export const makeNewTrip = (
-  currentUser: UserType,
-  newDestination: DestinationType
-): TripType => {
-  console.log("inside NewTripInputs");
-  console.log(newDestination);
-  let newTrip = new Trip(
-    {
-      id: Date.now(),
-      userID: currentUser.id,
-      destinationID: newDestination.id,
-      duration: dayjs(endDateInput.value).diff(
-        dayjs(startDateInput.value),
-        "days"
-      ),
-      travelers: Number(numTravelersInput.value),
-      status: "pending",
-      suggestedActivities: [],
-      date: dayjs(startDateInput.value).format("MM-DD-YYYY"),
-    },
-    newDestination
-  );
-
-  return newTrip;
-};
+import {
+  numTravelersInput,
+  destinationInput,
+  newTripInputs,
+} from "./queries.ts";
 
 export const findUsersTrips = (
   data: TripTypePrimative[],
   userID: number
 ): TripType[] => {
+  //@ts-ignore
   return data
     .filter((trip: TripTypePrimative) => trip.userID === userID)
     .map((trip) => {
@@ -70,7 +35,8 @@ export const findDestination = (
     (dest: DestinationType) => dest.location === location
   );
 };
-export const checkIfInputsAreValid = () => {
+
+export const checkIfInputsAreValid = (startDate: string, endDate: string) => {
   const dateRegEx =
     /^(20[0-3][0-9]|2040)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
   const numRegEx = /^([1-9]|[1-9][0-9]|[1-2][0-9]{2}|3[0-5][0-9]|36[0-5])$/;
@@ -79,8 +45,8 @@ export const checkIfInputsAreValid = () => {
     destinations.find(
       (dest: DestinationType) => dest.location === destinationInput.value
     ) &&
-    dateRegEx.test(`${startDateInput.value}`) &&
-    dateRegEx.test(`${endDateInput.value}`) &&
+    dateRegEx.test(`${startDate}`) &&
+    dateRegEx.test(`${endDate}`) &&
     numRegEx.test(`${numTravelersInput.value}`)
     ? true
     : false;
