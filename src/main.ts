@@ -187,5 +187,8 @@ accountBtn.addEventListener("click", () => {
 });
 
 agentNavBtns.forEach((btn) =>
-  btn.addEventListener("click", () => handleAgentNav("test"))
+  btn.addEventListener("click", (event) => {
+    if (event.target instanceof HTMLButtonElement && event.target.name)
+      handleAgentNav(event.target.name);
+  })
 );

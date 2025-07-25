@@ -77,8 +77,7 @@ export const updateDOMForAgent = (agent: Agent, charts?: boolean) => {
     agent.trips.filter((trip) => trip.status === "pending"),
     agent
   );
-  console.log("updateDOmforagetn");
   displayFinanceData(agent);
 
-  charts ? displayYearlyProfitChart(agent) : null;
+  displayYearlyProfitChart(agent);
 };

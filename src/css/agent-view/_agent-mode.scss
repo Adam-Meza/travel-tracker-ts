@@ -3,11 +3,11 @@
 
 .agent-box {
   @include flex-column;
-  align-items: flex-start;
+  align-items: center;
   height: 90%;
+  width: 90%;
   border: $grey-border;
   color: black;
-  padding: 0px 40px;
 }
 
 .agent-view-header {
@@ -16,6 +16,25 @@
   align-items: center;
   width: 100%;
   border-bottom: $grey-border;
+}
+
+.agent-finances-box {
+  @include flex-column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+
+  div {
+    @include flex-row;
+    width: 100%;
+    justify-content: space-around;
+
+    span {
+      font-size: 14px;
+      color: grey;
+    }
+  }
 }
 
 .agent-nav-btn {
