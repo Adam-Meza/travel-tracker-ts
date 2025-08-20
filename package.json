@@ -16,6 +16,7 @@
   "dependencies": {
     "chart.js": "^4.5.0",
     "chartjs": "^0.3.24",
-    "dayjs": "^1.11.13"
+    "dayjs": "^1.11.13",
+    "tsc": "^2.0.4"
   }
 }
