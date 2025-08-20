@@ -4,17 +4,17 @@
 .login-modal {
   @include flex-row;
   justify-content: center;
-  width: 600px;
+  width: 1200px;
 
   h2 {
     border-bottom: 1px solid $red;
   }
 
   .log-in-wrapper {
-    width: 40%;
+    width: 30%;
   }
-  .log-in-wrapper:nth-of-type(2) {
-    width: 60%;
+  .log-in-wrapper:nth-of-type(n + 2) {
+    width: 40%;
   }
 }
 

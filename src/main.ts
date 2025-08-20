@@ -83,7 +83,7 @@ startDateInput.setAttribute("min", dayjs().format("MM-DD-YYYY"));
 
 //Login Button Listener
 logInBtn.addEventListener("click", () => {
-  const usernameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent)$/;
+  const usernameRegEx = /^(traveler([1-9]|[1-4][0-9]|50)|agent|Agent)$/;
   const username = usernameInput.value;
 
   if (

@@ -1,10 +1,4 @@
-import type {
-  TripType,
-  DestinationType,
-  ViewType,
-  UserType,
-  AgentType,
-} from "./types";
+import type { TripType, DestinationType, ViewType, UserType } from "./types";
 import { destinations } from "../../test/test-data/destination-test-data";
 import { displayTripCards } from "./cards";
 import {

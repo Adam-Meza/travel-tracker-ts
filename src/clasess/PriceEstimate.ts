@@ -9,7 +9,7 @@ dayjs;
 export class PriceEstimate {
   id: number;
   duration: number;
-  date?: string;
+  date: string;
   travelers: number;
   destination: DestinationType;
   endDate: string;
