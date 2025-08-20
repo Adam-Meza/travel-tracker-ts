@@ -8,14 +8,14 @@ import {
   endDateInput,
   numTravelersInput,
 } from "./queries";
-import Trip from "../clasess/Trip";
+import Trip from "../classes/Trip";
 import {
   updateDOMAfterInput,
   displayFinanceData,
   closeModals,
 } from "./DOMManipulators";
-import { PriceEstimate } from "../clasess/PriceEstimate";
-import type Agent from "../clasess/Agent";
+import { PriceEstimate } from "../classes/PriceEstimate";
+import type Agent from "../classes/Agent";
 import { displayRequestCards } from "./cards";
 import { displayYearlyProfitChart } from "./chart";
 
@@ -60,7 +60,7 @@ export const handlePostingNewTrip = (currentUser: UserType) => {
         },
         newDestination
       );
-      
+
       currentUser.trips.push(newTrip);
       updateDOMAfterInput(currentUser);
     }

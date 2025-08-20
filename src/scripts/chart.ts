@@ -1,5 +1,5 @@
 import Chart from "chart.js/auto";
-import type Agent from "../clasess/Agent";
+import type Agent from "../classes/Agent";
 import { yearlyProfitChart } from "./queries";
 
 export const displayYearlyProfitChart = (agent: Agent) => {

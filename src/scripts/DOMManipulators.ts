@@ -29,7 +29,7 @@ import {
   financesDataPoints,
   agentViewContainer,
 } from "./queries";
-import type Agent from "../clasess/Agent";
+import type Agent from "../classes/Agent";
 
 export const updateDOMAfterInput = (currentUser: UserType) => {
   displayTripCards(currentUser.trips);

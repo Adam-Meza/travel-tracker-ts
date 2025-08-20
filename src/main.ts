@@ -1,6 +1,6 @@
 import "./css/styles.scss";
-import Agent from "./clasess/Agent.ts";
-import User from "./clasess/User.ts";
+import Agent from "./classes/Agent.ts";
+import User from "./classes/User.ts";
 import { travelers } from "../test/test-data/user-test-data.ts";
 import { trips } from "../test/test-data/trips-test-data.ts";
 import { destinations } from "../test/test-data/destination-test-data.ts";

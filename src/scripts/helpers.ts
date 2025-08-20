@@ -4,7 +4,7 @@ import type {
   TripTypePrimative,
   UserType,
 } from "./types.ts";
-import { Trip } from "../clasess/Trip.ts";
+import { Trip } from "../classes/Trip.ts";
 import { destinations } from "../../test/test-data/destination-test-data.ts";
 import {
   numTravelersInput,
