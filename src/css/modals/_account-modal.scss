@@ -12,6 +12,7 @@
     margin: 5px;
     font-size: 24px;
   }
+
   ul {
     @include flex-column;
     justify-content: center;
@@ -25,10 +26,10 @@
 
 .account-box {
   @include flex-column;
-  justify-content: space-around;
+  justify-content: space-between;
   margin: 0px;
-  height: 100%;
-  width: 100%;
+  height: clamp(250px, 40vh, 400px);
+  width: clamp(200px, 40vw, 600px);
   padding: 10px;
 }
 
@@ -36,7 +37,7 @@
   @include flex-row;
   justify-content: space-between;
   height: 15%;
-  width: 80%;
+  width: 100%;
 }
 
 .log-out-btn {
