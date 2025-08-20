@@ -6,7 +6,6 @@ import {
   inputErrorDisplay,
   startDateInput,
   endDateInput,
-  destinationInput,
   numTravelersInput,
 } from "./queries";
 import Trip from "../clasess/Trip";
@@ -42,7 +41,7 @@ export const postPriceEstimate = () => {
 
 export const handlePostingNewTrip = (currentUser: UserType) => {
   if (checkIfInputsAreValid(startDateInput.value, endDateInput.value)) {
-    const newDestination = findDestination(destinationInput.value);
+    const newDestination = findDestination(destinationList.value);
 
     if (newDestination) {
       const newTrip = new Trip(

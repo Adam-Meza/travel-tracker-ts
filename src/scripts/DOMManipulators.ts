@@ -92,10 +92,10 @@ export const resetDetails = (data: string[], elements: HTMLElement[]) => {
 
 const populateDestinationList = (destinations: DestinationType[]) => {
   destinations.forEach((destination: DestinationType) => {
-    console.log(destination.location);
-    destinationList.innerHTML += `<option value='${destination.location}'>`;
+    destinationList.options.add(
+      new Option(destination.location, destination.location)
+    );
   });
-  console.log("finsihed");
 };
 
 export const displayRandomDestination = () => {

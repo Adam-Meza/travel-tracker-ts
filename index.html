@@ -23,9 +23,10 @@
         <form class="new-trip-form"  id="js-new-trip-form">
             <section class="destination input-box">
                 <h2><label for="js-destination-input">Where to? <span>*</span></label></h2>
-                <input type="text" class="destination-input new-trip-input" id="js-destination-input"
-                    list="destinationList" placeholder="Choose destination...">
-                <select id="destinationList">
+                <select id="destinationList" class="destination-list">
+                    <button>
+                        <selectedcontent></selectedcontent>
+                    </button>
                 </select>
             </section>
             <section class="travel-date input-box">

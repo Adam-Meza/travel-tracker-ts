@@ -11,11 +11,6 @@
   padding: 10px;
   background-color: white;
 
-  datalist {
-    background-color: red;
-    height: clamp(100px, 10vh, 150px);
-  }
-
   s,
   h2 {
     margin: 0px 10px;
@@ -35,11 +30,6 @@
   max-width: 100%;
 }
 
-.destination-input {
-  height: 30px;
-  width: 200px;
-}
-
 .input-box {
   @include flex-column;
   justify-content: space-evenly;
@@ -47,10 +37,24 @@
   width: 100%;
   margin: 2px;
 
-  input {
+  input,
+  select {
     height: 30px;
     margin: 0px 5px;
     text-indent: 5px;
+  }
+}
+
+.destination-list {
+  font-family: "Open Sans", sans-serif;
+  appearance: base-select;
+  width: 200px;
+
+  option {
+    width: 100%;
+    text-align: start;
+    margin: 0px;
+    padding: 0px;
   }
 }
 
@@ -65,4 +69,22 @@
   color: $red;
   margin: 3px 0px 5px 15px;
   padding: 0;
+}
+
+selectedcontent {
+  color: grey;
+}
+
+::picker(select) {
+  appearance: base-select;
+  background-color: white;
+  top: calc(anchor(bottom) + 1px);
+  left: anchor(0%);
+  height: 200px;
+  width: fit-content;
+}
+
+option::checkmark {
+  display: none;
+  width: fit-content;
 }

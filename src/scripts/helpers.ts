@@ -8,7 +8,7 @@ import Trip from "../clasess/Trip.ts";
 import { destinations } from "../../test/test-data/destination-test-data.ts";
 import {
   numTravelersInput,
-  destinationInput,
+  destinationList,
   newTripInputs,
 } from "./queries.ts";
 
@@ -44,7 +44,7 @@ export const checkIfInputsAreValid = (startDate: string, endDate: string) => {
 
   return newTripInputs.every((input) => input.value) &&
     destinations.find(
-      (dest: DestinationType) => dest.location === destinationInput.value
+      (dest: DestinationType) => dest.location === destinationList.value
     ) &&
     dateRegEx.test(`${startDate}`) &&
     dateRegEx.test(`${endDate}`) &&

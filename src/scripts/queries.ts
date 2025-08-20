@@ -43,7 +43,7 @@ export const numTravelersInput = document.getElementById(
 
 export const destinationList = document.getElementById(
   "destinationList"
-) as HTMLInputElement;
+) as HTMLSelectElement;
 
 export const startDateInput = document.getElementById(
   "js-start-date"
@@ -52,10 +52,6 @@ export const startDateInput = document.getElementById(
 export const inputErrorDisplay = document.getElementById(
   "js-input-error-display"
 ) as HTMLElement;
-
-export const destinationInput = document.getElementById(
-  "js-destination-input"
-) as HTMLInputElement;
 
 //Header Elements
 export const accountBtn = document.getElementById(
