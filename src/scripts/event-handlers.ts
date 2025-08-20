@@ -60,7 +60,7 @@ export const handlePostingNewTrip = (currentUser: UserType) => {
         },
         newDestination
       );
-
+      
       currentUser.trips.push(newTrip);
       updateDOMAfterInput(currentUser);
     }

@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import type { DestinationType, TripTypePrimative } from "../scripts/types";
 
 import { PriceEstimate } from "./PriceEstimate";
