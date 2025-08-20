@@ -15,8 +15,8 @@
 * {
   font-family: "Open Sans", sans-serif;
 
-  &:focus {
-    border: solid 1px #085da8;
+  :focus {
+    outline: none;
   }
 }
 
