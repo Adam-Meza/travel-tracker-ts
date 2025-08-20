@@ -8,14 +8,14 @@ import {
   endDateInput,
   numTravelersInput,
 } from "./queries";
-import Trip from "../classes/Trip";
+import { Trip } from "../classes/Trip";
 import {
   updateDOMAfterInput,
   displayFinanceData,
   closeModals,
 } from "./DOMManipulators";
 import { PriceEstimate } from "../classes/PriceEstimate";
-import type Agent from "../classes/Agent";
+import type { Agent } from "../classes/Agent";
 import { displayRequestCards } from "./cards";
 import { displayYearlyProfitChart } from "./chart";
 
@@ -70,7 +70,7 @@ export const handlePostingNewTrip = (currentUser: UserType) => {
   }
 };
 
-export const updateDOMForAgent = (agent: Agent, charts?: boolean) => {
+export const updateDOMForAgent = (agent: Agent) => {
   closeModals();
   displayRequestCards(
     agent.trips.filter((trip) => trip.status === "pending"),

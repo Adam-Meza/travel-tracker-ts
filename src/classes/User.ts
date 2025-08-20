@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import type { UserTypePrimative, TripType } from "../scripts/types";
 
-class User {
+export class User {
   id: number;
   name: string;
   trips: TripType[];
@@ -28,5 +28,3 @@ class User {
     return temp;
   }
 }
-
-export default User;

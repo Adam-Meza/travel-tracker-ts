@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import type { TripType } from "./types";
 import { cardBox, requestsCardsBox } from "./queries";
-import Agent from "../classes/Agent";
+import { Agent } from "../classes/Agent";
 
 export const displayTripCards = (trips: TripType[]) => {
   cardBox.innerHTML = "";

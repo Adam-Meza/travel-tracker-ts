@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 // Wrapper Elements
 export const mainTitle = document.getElementById(
   "js-main-title"

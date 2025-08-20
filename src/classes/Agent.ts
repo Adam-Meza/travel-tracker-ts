@@ -66,5 +66,3 @@ export class Agent {
     }, {} as Record<number, TripType[]>);
   }
 }
-
-export default Agent;
