@@ -2,7 +2,7 @@ import type { DestinationType, TripTypePrimative } from "../scripts/types";
 
 import { PriceEstimate } from "./PriceEstimate";
 
-class Trip extends PriceEstimate {
+export class Trip extends PriceEstimate {
   id: number;
   userID: number;
   destinationID: number;
@@ -32,5 +32,3 @@ class Trip extends PriceEstimate {
     this.totalPrice = this.calculatePrice();
   }
 }
-
-export default Trip;
