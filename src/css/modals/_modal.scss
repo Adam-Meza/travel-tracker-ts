@@ -8,9 +8,9 @@
   z-index: 2;
   transform: translate(-50%, -50%) scale(1);
   background-color: white;
-  width: 40%;
-  height: 60%;
-  min-height: 450px;
+  width: fit-content;
+  height: clamp(150px, fit-content, 600px);
+  padding: 20px;
 }
 
 .overlay {

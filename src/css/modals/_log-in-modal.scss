@@ -1,39 +1,34 @@
 @import "../variables";
 @import "../mixins";
 
-.login-modal {
+.log-in-modal {
   @include flex-row;
   justify-content: center;
-  width: 1200px;
+  width: clamp(300px, 65vw, 1500px);
 
   h2 {
     border-bottom: 1px solid $red;
   }
 
   .log-in-wrapper {
-    width: 30%;
+    padding: 20px;
+    width: clamp(150px, 30%, 500px);
   }
   .log-in-wrapper:nth-of-type(n + 2) {
+    border-left: $grey-border;
     width: 40%;
   }
 }
 
 .intro-info {
   @include flex-column;
-  border-left: $grey-border;
   height: 80%;
-  margin: 10%;
-  margin-left: 0px;
-
-  p {
-    margin-left: 30px;
-  }
 }
 
 .log-in-content {
   @include flex-column;
   justify-content: center;
-  font-size: 30px;
+  font-size: 24px;
   width: 100%;
   height: 100%;
 
@@ -73,5 +68,19 @@
   .log-in-error {
     margin: 25px;
     font-size: 16px;
+  }
+
+  .log-in-wrapper:nth-of-type(2) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .log-in-wrapper {
+    padding: 0px;
+  }
+
+  .log-in-wrapper:nth-of-type(3) {
+    display: none;
   }
 }
